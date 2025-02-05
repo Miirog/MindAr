@@ -1,11 +1,17 @@
 document.addEventListener("DOMContentLoaded", (event) => {
   const button = document.getElementById("myButton");
-  const model = document.getElementById("model"); // Define the model variable
+  const model = document.getElementById("model"); // Ensure the model element is selected
+
+  if (!model) {
+    console.error("Model element not found");
+    return;
+  }
 
   button.addEventListener("click", () => {
     console.log("Button was clicked!");
     // Change the model source
     model.setAttribute("src", "models/new-scene.gltf");
+    console.log("Model source updated to models/new-scene.gltf");
   });
 });
 
