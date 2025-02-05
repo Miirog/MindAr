@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", (event) => {
   const button = document.getElementById("myButton");
-  const model = document.getElementById("avatarModel"); // Define the model variable
+  const model = document.getElementById("model"); // Define the model variable
 
   button.addEventListener("click", () => {
     console.log("Button was clicked!");
     // Change the model source
-    avatarModel.setAttribute("src", "models/new-scene.gltf");
+    model.setAttribute("src", "models/new-scene.gltf");
   });
 });
 
