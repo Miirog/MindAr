@@ -1,8 +1,9 @@
 document.addEventListener("DOMContentLoaded", (event) => {
   const button = document.getElementById("myButton");
   button.addEventListener("click", () => {
-    alert("Button was clicked!");
-    console.log("Button Click");
+    console.log("Button was clicked!");
+    // Change the model source
+    model.setAttribute("src", "models/new-scene.gltf");
   });
 });
 
