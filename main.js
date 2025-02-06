@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", (event) => {
   const nextButton = document.getElementById("nextObject");
-  const model = document.getElementById("model"); // Ensure the model element is selected
+  const model = document.getElementById("model");
+  const scene = document.querySelector("a-scene");
 
   let rotation = { x: 0, y: 0, z: 0 };
 
@@ -22,7 +23,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   }
 
   // Event listener for mouse movements
-  document.addEventListener("mousemove", (event) => {
+  scene.addEventListener("mousemove", (event) => {
     const movementX =
       event.movementX || event.mozMovementX || event.webkitMovementX || 0;
     const movementY =
@@ -34,16 +35,33 @@ document.addEventListener("DOMContentLoaded", (event) => {
     updateRotation();
   });
 
+  // Variables to keep track of the previous touch positions
+  let previousTouchX = null;
+  let previousTouchY = null;
+
   // Event listener for touch movements
-  document.addEventListener("touchmove", (event) => {
+  scene.addEventListener("touchmove", (event) => {
     const touch = event.touches[0];
-    const movementX = touch.clientX - touch.screenX;
-    const movementY = touch.clientY - touch.screenY;
 
-    rotation.y += movementX * 0.1; // Adjust the rotation speed as needed
-    rotation.x -= movementY * 0.1; // Adjust the rotation speed as needed
+    if (previousTouchX !== null && previousTouchY !== null) {
+      const movementX = touch.clientX - previousTouchX;
+      const movementY = touch.clientY - previousTouchY;
 
-    updateRotation();
+      rotation.y += movementX * 0.1; // Adjust the rotation speed as needed
+      rotation.x -= movementY * 0.1; // Adjust the rotation speed as needed
+
+      updateRotation();
+    }
+
+    // Update the previous touch positions
+    previousTouchX = touch.clientX;
+    previousTouchY = touch.clientY;
+  });
+
+  // Reset previous touch positions when touch ends
+  scene.addEventListener("touchend", () => {
+    previousTouchX = null;
+    previousTouchY = null;
   });
 });
 //animation="property: position; to: 0 0.1 0.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"
