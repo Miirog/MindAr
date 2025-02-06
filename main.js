@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", (event) => {
   const nextButton = document.getElementById("nextObject");
+  const previousButton = document.getElementById("previousObject");
   const model = document.getElementById("model");
+  const modelNameDisplay = document.getElementById("modelNameDisplay"); // Assuming you have an element to display the model name
   const scene = document.querySelector("a-scene");
 
   let rotation = { x: 0, y: 0, z: 0 };
@@ -10,59 +12,35 @@ document.addEventListener("DOMContentLoaded", (event) => {
     return;
   }
 
-  nextButton.addEventListener("click", () => {
-    console.log("Button was clicked!");
-    // Change the model source
-    model.setAttribute("src", "models/new-scene.gltf");
-    console.log("Model source updated to models/new-scene.gltf");
-  });
+  // Arrays for model sources and names
+  const modelSources = ["models/scene.gltf", "models/new-scene.gltf"];
 
-  // Function to update the rotation of the model
-  function updateRotation() {
-    model.setAttribute("rotation", `${rotation.x} ${rotation.y} ${rotation.z}`);
+  const modelNames = ["Scene 1", "Scene 2", "Scene 3"];
+
+  let currentModelIndex = 0;
+
+  // Function to update the model and name
+  function updateModel() {
+    model.setAttribute("src", modelSources[currentModelIndex]);
+    modelNameDisplay.textContent = modelNames[currentModelIndex];
+    console.log(`Model source updated to ${modelSources[currentModelIndex]}`);
   }
 
-  // Event listener for mouse movements
-  scene.addEventListener("mousemove", (event) => {
-    const movementX =
-      event.movementX || event.mozMovementX || event.webkitMovementX || 0;
-    const movementY =
-      event.movementY || event.mozMovementY || event.webkitMovementY || 0;
-
-    rotation.y += movementX * 0.1; // Adjust the rotation speed as needed
-    rotation.x -= movementY * 0.1; // Adjust the rotation speed as needed
-
-    updateRotation();
+  // Event listener for the next button
+  nextButton.addEventListener("click", () => {
+    currentModelIndex = (currentModelIndex + 1) % modelSources.length;
+    updateModel();
   });
 
-  // Variables to keep track of the previous touch positions
-  let previousTouchX = null;
-  let previousTouchY = null;
-
-  // Event listener for touch movements
-  scene.addEventListener("touchmove", (event) => {
-    const touch = event.touches[0];
-
-    if (previousTouchX !== null && previousTouchY !== null) {
-      const movementX = touch.clientX - previousTouchX;
-      const movementY = touch.clientY - previousTouchY;
-
-      rotation.y += movementX * 0.1; // Adjust the rotation speed as needed
-      rotation.x -= movementY * 0.1; // Adjust the rotation speed as needed
-
-      updateRotation();
-    }
-
-    // Update the previous touch positions
-    previousTouchX = touch.clientX;
-    previousTouchY = touch.clientY;
+  // Event listener for the previous button
+  previousButton.addEventListener("click", () => {
+    currentModelIndex =
+      (currentModelIndex - 1 + modelSources.length) % modelSources.length;
+    updateModel();
   });
 
-  // Reset previous touch positions when touch ends
-  scene.addEventListener("touchend", () => {
-    previousTouchX = null;
-    previousTouchY = null;
-  });
+  // Initialize the first model
+  updateModel();
 });
 //animation="property: position; to: 0 0.1 0.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"
 {

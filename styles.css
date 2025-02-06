@@ -1,25 +1,45 @@
 #nextObject {
   position: absolute;
-  top: 50%; /* Position the button at the middle of the screen vertically */
-  right: 10px; /* Move the button to the right side */
-  transform: translateY(-50%); /* Adjust the button to be centered vertically */
+  top: 50%; 
+  right: 10px;
+  transform: translateY(-50%);
   z-index: 1000;
-  width: 50px; /* Set a fixed width */
-  height: 50px; /* Set a fixed height */
-  border-radius: 50%; /* Make the button round */
-  text-align: center; /* Center the text */
-  line-height: 50px; /* Center the text vertically */
+  width: 50px; 
+  height: 50px; 
+  border-radius: 50%; 
+  text-align: center; 
+  line-height: 50px; 
+  background-color: darkgreen;
+  color: white;
+  border: none;
 }
 
 #previousObject {
   position: absolute;
-  top: 50%; /* Position the button at the middle of the screen vertically */
-  left: 10px; /* Move the button to the left side */
-  transform: translateY(-50%); /* Adjust the button to be centered vertically */
+  top: 50%; 
+  left: 10px; 
+  transform: translateY(-50%);
   z-index: 1000;
-  width: 50px; /* Set a fixed width */
-  height: 50px; /* Set a fixed height */
-  border-radius: 50%; /* Make the button round */
-  text-align: center; /* Center the text */
-  line-height: 50px; /* Center the text vertically */
+  width: 50px; 
+  height: 50px; 
+  border-radius: 50%; 
+  text-align: center; 
+  line-height: 50px; 
+  background-color: darkgreen;
+  color: white;
+  border: none;
+}
+
+#bottomBox {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  background-color: rgba(0, 0, 0, 0.8); 
+  color: white; 
+  padding: 20px; 
+  box-sizing: border-box; 
+  text-align: center; 
+  border-radius: 30px;
 }
