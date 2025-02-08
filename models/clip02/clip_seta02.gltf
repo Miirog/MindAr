@@ -1,134 +1,114 @@
 {
-	"asset":{
-		"generator":"Khronos glTF Blender I/O v4.3.47",
-		"version":"2.0"
-	},
-	"extensionsUsed":[
-		"KHR_materials_specular"
-	],
-	"scene":0,
-	"scenes":[
-		{
-			"name":"Scene",
-			"nodes":[
-				0
-			]
-		}
-	],
-	"nodes":[
-		{
-			"mesh":0,
-			"name":"01.849.065.70",
-			"rotation":[
-				0.7071068286895752,
-				0,
-				0,
-				0.7071068286895752
-			]
-		}
-	],
-	"materials":[
-		{
-			"doubleSided":true,
-			"extensions":{
-				"KHR_materials_specular":{
-					"specularFactor":0
-				}
-			},
-			"name":"Opaque(190,188,186).003",
-			"pbrMetallicRoughness":{
-				"baseColorFactor":[
-					0.7450979948043823,
-					0.7372549772262573,
-					0.7294120192527771,
-					1
-				],
-				"metallicFactor":0
-			}
-		}
-	],
-	"meshes":[
-		{
-			"name":"01.849.065.001",
-			"primitives":[
-				{
-					"attributes":{
-						"POSITION":0,
-						"NORMAL":1,
-						"TEXCOORD_0":2
-					},
-					"indices":3,
-					"material":0
-				}
-			]
-		}
-	],
-	"accessors":[
-		{
-			"bufferView":0,
-			"componentType":5126,
-			"count":742,
-			"max":[
-				0.8999999761581421,
-				0.9131439924240112,
-				0.5520889759063721
-			],
-			"min":[
-				0,
-				-0.7202069759368896,
-				-0.5579109787940979
-			],
-			"type":"VEC3"
-		},
-		{
-			"bufferView":1,
-			"componentType":5126,
-			"count":742,
-			"type":"VEC3"
-		},
-		{
-			"bufferView":2,
-			"componentType":5126,
-			"count":742,
-			"type":"VEC2"
-		},
-		{
-			"bufferView":3,
-			"componentType":5123,
-			"count":2160,
-			"type":"SCALAR"
-		}
-	],
-	"bufferViews":[
-		{
-			"buffer":0,
-			"byteLength":8904,
-			"byteOffset":0,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":8904,
-			"byteOffset":8904,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":5936,
-			"byteOffset":17808,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":4320,
-			"byteOffset":23744,
-			"target":34963
-		}
-	],
-	"buffers":[
-		{
-			"byteLength":28064,
-			"uri":"clipseta_02.bin"
-		}
-	]
+  "asset": {
+    "generator": "Khronos glTF Blender I/O v4.3.47",
+    "version": "2.0"
+  },
+  "extensionsUsed": ["KHR_materials_specular"],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [0]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "01.849.065.70",
+      "rotation": [0.7071068286895752, 0, 0, 0.7071068286895752]
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_specular": {
+          "specularFactor": 0
+        }
+      },
+      "name": "Opaque(190,188,186).003",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.7450979948043823, 0.7372549772262573, 0.7294120192527771, 1
+        ],
+        "metallicFactor": 0
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "01.849.065.001",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3,
+          "material": 0
+        }
+      ]
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 742,
+      "max": [0.8999999761581421, 0.9131439924240112, 0.5520889759063721],
+      "min": [0, -0.7202069759368896, -0.5579109787940979],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 742,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 742,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5123,
+      "count": 2160,
+      "type": "SCALAR"
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 8904,
+      "byteOffset": 0,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 8904,
+      "byteOffset": 8904,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 5936,
+      "byteOffset": 17808,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 4320,
+      "byteOffset": 23744,
+      "target": 34963
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 28064,
+      "uri": "clip_seta02.bin"
+    }
+  ]
 }
