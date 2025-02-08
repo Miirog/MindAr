@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const previousButton = document.getElementById("previousObject");
   const model = document.getElementById("model");
   const bottomBox = document.getElementById("bottomBox");
+  const ascene = document.getElementById("a-entity");
+  const content = document.getElementById("content");
+  const trackRotation = document.getElementById("trackRotation");
 
   const modelSources = [
     "models/bocolla/bocolla.gltf",
@@ -49,6 +52,43 @@ document.addEventListener("DOMContentLoaded", (event) => {
       (currentModelIndex - 1 + modelSources.length) % modelSources.length;
     updateModel();
   });
+
+  // Variables to keep track of the previous touch positions
+  let previousTouchX = null;
+  let previousTouchY = null;
+
+  // Function to update the rotation of the model
+  function updateRotation(rotation) {
+    model.setAttribute("rotation", `${rotation.x} ${rotation.y} ${rotation.z}`);
+  }
+
+  let rotation = { x: 0, y: 0, z: 0 };
+
+  // Event listener for touch movements
+  trackRotation.addEventListener("touchmove", (event) => {
+    const touch = event.touches[0];
+
+    if (previousTouchX !== null && previousTouchY !== null) {
+      const movementX = touch.clientX - previousTouchX;
+      const movementY = touch.clientY - previousTouchY;
+
+      rotation.y += movementX * 0.1; // Adjust the rotation speed as needed
+      rotation.x -= movementY * 0.1; // Adjust the rotation speed as needed
+
+      updateRotation(rotation);
+    }
+
+    // Update the previous touch positions
+    previousTouchX = touch.clientX;
+    previousTouchY = touch.clientY;
+  });
+
+  // Reset previous touch positions when touch ends
+  trackRotation.addEventListener("touchend", () => {
+    previousTouchX = null;
+    previousTouchY = null;
+  });
+
   updateModel();
 });
 //animation="property: position; to: 0 0.1 0.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"
