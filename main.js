@@ -72,8 +72,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
       const movementX = touch.clientX - previousTouchX;
       const movementY = touch.clientY - previousTouchY;
 
-      rotation.y += movementX * 0.1; // Adjust the rotation speed as needed
-      rotation.x -= movementY * 0.1; // Adjust the rotation speed as needed
+      rotation.y += movementX * 1; // Adjust the rotation speed as needed
+      rotation.x -= movementY * 1; // Adjust the rotation speed as needed
 
       updateRotation(rotation);
     }
