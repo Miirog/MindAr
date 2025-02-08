@@ -3,6 +3,9 @@
 		"generator":"Khronos glTF Blender I/O v4.3.47",
 		"version":"2.0"
 	},
+	"extensionsUsed":[
+		"KHR_materials_specular"
+	],
 	"scene":0,
 	"scenes":[
 		{
@@ -15,28 +18,38 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"Cube"
+			"name":"00.846.150.99",
+			"rotation":[
+				0.70710688829422,
+				0,
+				0,
+				0.7071066498756409
+			]
 		}
 	],
 	"materials":[
 		{
 			"doubleSided":true,
-			"name":"Material",
+			"extensions":{
+				"KHR_materials_specular":{
+					"specularFactor":0
+				}
+			},
+			"name":"Opaque(190,188,186).002",
 			"pbrMetallicRoughness":{
 				"baseColorFactor":[
-					0.800000011920929,
-					0.800000011920929,
-					0.800000011920929,
+					0.7450979948043823,
+					0.7372549772262573,
+					0.7294120192527771,
 					1
 				],
-				"metallicFactor":0,
-				"roughnessFactor":0.5
+				"metallicFactor":0
 			}
 		}
 	],
 	"meshes":[
 		{
-			"name":"Cube",
+			"name":"00.846.150.001",
 			"primitives":[
 				{
 					"attributes":{
@@ -54,68 +67,68 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":24,
+			"count":328,
 			"max":[
-				1,
-				1,
-				1
+				0.39999938011169434,
+				0.75,
+				0.4670731723308563
 			],
 			"min":[
-				-1,
-				-1,
-				-1
+				-0.4000006318092346,
+				-0.75,
+				-0.5329268574714661
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":24,
+			"count":328,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":24,
+			"count":328,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5123,
-			"count":36,
+			"count":900,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":288,
+			"byteLength":3936,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":288,
-			"byteOffset":288,
+			"byteLength":3936,
+			"byteOffset":3936,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":192,
-			"byteOffset":576,
+			"byteLength":2624,
+			"byteOffset":7872,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":72,
-			"byteOffset":768,
+			"byteLength":1800,
+			"byteOffset":10496,
 			"target":34963
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":840,
-			"uri":"scene.bin"
+			"byteLength":12296,
+			"uri":"bocolla.bin"
 		}
 	]
 }

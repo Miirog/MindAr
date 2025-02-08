@@ -2,44 +2,53 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const nextButton = document.getElementById("nextObject");
   const previousButton = document.getElementById("previousObject");
   const model = document.getElementById("model");
-  const modelNameDisplay = document.getElementById("modelNameDisplay"); // Assuming you have an element to display the model name
-  const scene = document.querySelector("a-scene");
+  const bottomBox = document.getElementById("bottomBox");
 
-  let rotation = { x: 0, y: 0, z: 0 };
+  const modelSources = [
+    "models/bocolla/bocolla.gltf",
+    "models/clip01/clip_seta01.gltf",
+    "models/clip02/clip_seta02.gltf",
+    "models/porca_rapida14/porca_rapida-modelo14.gltf",
+    "models/porca_rapida27/porca_rapida-modelo27.gltf",
+    "models/presilha_de_fogao/presilha_de_fogao.gltf",
+  ];
 
-  if (!model) {
-    console.error("Model element not found");
-    return;
-  }
-
-  // Arrays for model sources and names
-  const modelSources = ["models/scene.gltf", "models/new-scene.gltf"];
-
-  const modelNames = ["Scene 1", "Scene 2", "Scene 3"];
+  const bottomBoxTexts = [
+    { title: "Bócolla", description: "Exemplo 1" },
+    { title: "Clip - Seta 01", description: "Exemplo 2" },
+    { title: "Clip - Seta 02", description: "Exemplo 3" },
+    {
+      title: "Porca Rápida - modelo 14",
+      description: "Exemplo 3",
+    },
+    {
+      title: "Porca Rápida - modelo 27",
+      description: "Exemplo 3",
+    },
+    { title: "Presilha de Fogão", description: "Exemplo 3" },
+  ];
 
   let currentModelIndex = 0;
 
-  // Function to update the model and name
   function updateModel() {
     model.setAttribute("src", modelSources[currentModelIndex]);
-    modelNameDisplay.textContent = modelNames[currentModelIndex];
+    bottomBox.querySelector("h2").textContent =
+      bottomBoxTexts[currentModelIndex].title;
+    bottomBox.querySelector("p").textContent =
+      bottomBoxTexts[currentModelIndex].description;
     console.log(`Model source updated to ${modelSources[currentModelIndex]}`);
   }
 
-  // Event listener for the next button
   nextButton.addEventListener("click", () => {
     currentModelIndex = (currentModelIndex + 1) % modelSources.length;
     updateModel();
   });
 
-  // Event listener for the previous button
   previousButton.addEventListener("click", () => {
     currentModelIndex =
       (currentModelIndex - 1 + modelSources.length) % modelSources.length;
     updateModel();
   });
-
-  // Initialize the first model
   updateModel();
 });
 //animation="property: position; to: 0 0.1 0.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"
