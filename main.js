@@ -53,18 +53,15 @@ document.addEventListener("DOMContentLoaded", (event) => {
     updateModel();
   });
 
-  // Variables to keep track of the previous touch positions
   let previousTouchX = null;
   let previousTouchY = null;
 
-  // Function to update the rotation of the model
   function updateRotation(rotation) {
     model.setAttribute("rotation", `${rotation.x} ${rotation.y} ${rotation.z}`);
   }
 
   let rotation = { x: 0, y: 0, z: 0 };
 
-  // Event listener for touch movements
   trackRotation.addEventListener("touchmove", (event) => {
     const touch = event.touches[0];
 
@@ -72,18 +69,16 @@ document.addEventListener("DOMContentLoaded", (event) => {
       const movementX = touch.clientX - previousTouchX;
       const movementY = touch.clientY - previousTouchY;
 
-      rotation.y += movementX * 1; // Adjust the rotation speed as needed
-      rotation.x -= movementY * 1; // Adjust the rotation speed as needed
+      rotation.y += movementX * 1;
+      rotation.x -= movementY * 1;
 
       updateRotation(rotation);
     }
 
-    // Update the previous touch positions
     previousTouchX = touch.clientX;
     previousTouchY = touch.clientY;
   });
 
-  // Reset previous touch positions when touch ends
   trackRotation.addEventListener("touchend", () => {
     previousTouchX = null;
     previousTouchY = null;
