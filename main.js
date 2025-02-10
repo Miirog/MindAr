@@ -3,8 +3,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const previousButton = document.getElementById("previousObject");
   const model = document.getElementById("model");
   const bottomBox = document.getElementById("bottomBox");
-  const ascene = document.getElementById("a-entity");
-  const content = document.getElementById("content");
   const trackRotation = document.getElementById("trackRotation");
 
   const modelSources = [
@@ -84,9 +82,44 @@ document.addEventListener("DOMContentLoaded", (event) => {
     previousTouchY = null;
   });
 
+  // Variables to keep track of pinch zoom
+  let initialDistance = null;
+  let initialScale = 0.3; // Initial scale of the model
+
+  function getDistance(touches) {
+    const dx = touches[0].clientX - touches[1].clientX;
+    const dy = touches[0].clientY - touches[1].clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  function updateScale(scale) {
+    model.setAttribute("scale", `${scale} ${scale} ${scale}`);
+  }
+
+  trackRotation.addEventListener("touchmove", (event) => {
+    if (event.touches.length === 2) {
+      const currentDistance = getDistance(event.touches);
+
+      if (initialDistance !== null) {
+        const scaleChange = currentDistance / initialDistance;
+        const newScale = initialScale * scaleChange;
+        updateScale(newScale);
+      }
+    }
+  });
+
+  trackRotation.addEventListener("touchstart", (event) => {
+    if (event.touches.length === 2) {
+      initialDistance = getDistance(event.touches);
+      initialScale = parseFloat(model.getAttribute("scale").x);
+    }
+  });
+
+  trackRotation.addEventListener("touchend", (event) => {
+    if (event.touches.length < 2) {
+      initialDistance = null;
+    }
+  });
+
   updateModel();
 });
-//animation="property: position; to: 0 0.1 0.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"
-{
-  /* <a-plane src="#card" position="0 0 0" height="0.552" width="1" rotation="0 0 0"></a-plane> */
-}
