@@ -3,7 +3,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const previousButton = document.getElementById("previousObject");
   const model = document.getElementById("model");
   const bottomBox = document.getElementById("bottomBox");
+  const aEntity = document.getElementById("a-entity");
   const trackRotation = document.getElementById("trackRotation");
+
+  nextButton.classList.add("hidden");
+  previousButton.classList.add("hidden");
 
   const modelSources = [
     "models/bocolla/bocolla.gltf",
@@ -82,7 +86,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
     previousTouchY = null;
   });
 
-  // Variables to keep track of pinch zoom
   let initialDistance = null;
   let initialScale = 0.3; // Initial scale of the model
   const maxScale = 3.0; // Maximum scale
@@ -123,6 +126,16 @@ document.addEventListener("DOMContentLoaded", (event) => {
     if (event.touches.length < 2) {
       initialDistance = null;
     }
+  });
+
+  aEntity.addEventListener("targetFound", () => {
+    nextButton.classList.remove("hidden");
+    previousButton.classList.remove("hidden");
+  });
+
+  aEntity.addEventListener("targetLost", () => {
+    nextButton.classList.add("hidden");
+    previousButton.classList.add("hidden");
   });
 
   updateModel();
