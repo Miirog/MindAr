@@ -5,10 +5,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const bottomBox = document.getElementById("bottomBox");
   const aEntity = document.getElementById("a-entity");
   const trackRotation = document.getElementById("trackRotation");
+  const background = document.getElementById("background_color");
 
   nextButton.classList.add("hidden");
   previousButton.classList.add("hidden");
   bottomBox.classList.add("hidden");
+  background.classList.add("hidden");
 
   const modelSources = [
     "models/bocolla/bocolla.gltf",
@@ -133,12 +135,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
     nextButton.classList.remove("hidden");
     previousButton.classList.remove("hidden");
     bottomBox.classList.remove("hidden");
+    background.classList.remove("hidden");
   });
 
   aEntity.addEventListener("targetLost", () => {
     nextButton.classList.add("hidden");
     previousButton.classList.add("hidden");
     bottomBox.classList.add("hidden");
+    background.classList.add("hidden");
   });
 
   updateModel();
