@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   previousButton.classList.add("hidden");
   bottomBox.classList.add("hidden");
   background.classList.add("hidden");
+  model.classList.add("hidden");
 
   const modelSources = [
     "models/bocolla/bocolla.gltf",
@@ -155,14 +156,16 @@ document.addEventListener("DOMContentLoaded", (event) => {
     previousButton.classList.remove("hidden");
     bottomBox.classList.remove("hidden");
     background.classList.remove("hidden");
+    model.classList.remove("hidden");
   });
 
-  aEntity.addEventListener("targetLost", () => {
-    nextButton.classList.add("hidden");
-    previousButton.classList.add("hidden");
-    bottomBox.classList.add("hidden");
-    background.classList.add("hidden");
-  });
+  // aEntity.addEventListener("targetLost", () => {
+  //   nextButton.classList.add("hidden");
+  //   previousButton.classList.add("hidden");
+  //   bottomBox.classList.add("hidden");
+  //   background.classList.add("hidden");
+  //   model.classList.add("hidden");
+  // });
 
   updateModel();
 });
