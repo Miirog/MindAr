@@ -22,18 +22,36 @@ document.addEventListener("DOMContentLoaded", (event) => {
   ];
 
   const bottomBoxTexts = [
-    { title: "Bócolla", description: "Exemplo 1" },
-    { title: "Clip - Seta 01", description: "Exemplo 2" },
-    { title: "Clip - Seta 02", description: "Exemplo 3" },
+    {
+      title: "Bócolla",
+      description1: "Amplo catálogo ;",
+      description2: "Diversidade de formatos e propriedades;",
+    },
+    {
+      title: "Clip - Seta 01",
+      description1: "Versatilidade;",
+      description2: "Durabilidade & Segurança;",
+    },
+    {
+      title: "Clip - Seta 02",
+      description2: "Versatilidade;",
+      description2: "Durabilidade & Segurança;",
+    },
     {
       title: "Porca Rápida - modelo 14",
-      description: "Exemplo 3",
+      description1: "Praticidade;",
+      description2: "Fácil Instalação;",
     },
     {
       title: "Porca Rápida - modelo 27",
-      description: "Exemplo 3",
+      description1: "Praticidade;",
+      description2: "Fácil Instalação;",
     },
-    { title: "Presilha de Fogão", description: "Exemplo 3" },
+    {
+      title: "Presilha de Fogão",
+      description1: "Essencial no dia-a-dia;",
+      description2: "Presente na sua cozinha;",
+    },
   ];
 
   let currentModelIndex = 0;
@@ -42,8 +60,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
     model.setAttribute("src", modelSources[currentModelIndex]);
     bottomBox.querySelector("h2").textContent =
       bottomBoxTexts[currentModelIndex].title;
-    bottomBox.querySelector("p").textContent =
-      bottomBoxTexts[currentModelIndex].description;
+    bottomBox.querySelector("#description1").textContent =
+      bottomBoxTexts[currentModelIndex].description1;
+    bottomBox.querySelector("#description2").textContent =
+      bottomBoxTexts[currentModelIndex].description2;
     console.log(`Model source updated to ${modelSources[currentModelIndex]}`);
   }
 
