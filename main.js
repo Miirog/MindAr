@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     },
     {
       title: "Clip",
-      description2: "Versatilidade;",
+      description1: "Versatilidade;",
       description2: "Durabilidade & Segurança;",
     },
     {
