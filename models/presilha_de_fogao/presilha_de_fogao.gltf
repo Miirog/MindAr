@@ -28,8 +28,9 @@
         "baseColorTexture": {
           "index": 1
         },
-        "metallicFactor": 0,
-        "roughnessFactor": 0.5
+        "metallicRoughnessTexture": {
+          "index": 2
+        }
       }
     }
   ],
@@ -57,6 +58,10 @@
     {
       "sampler": 0,
       "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
     }
   ],
   "images": [
@@ -69,6 +74,11 @@
       "mimeType": "image/png",
       "name": "Part_BaseColor",
       "uri": "textures/Part_BaseColor.png"
+    },
+    {
+      "mimeType": "image/png",
+      "name": "Part_Metallic-Part_Roughness",
+      "uri": "textures/Part_Metallic-Part_Roughness.png"
     }
   ],
   "accessors": [
@@ -76,8 +86,8 @@
       "bufferView": 0,
       "componentType": 5126,
       "count": 1234,
-      "max": [1.1400890350341797, 0.550000011920929, 1.263700008392334],
-      "min": [-1.1400890350341797, -0.550000011920929, -0.1083889976143837],
+      "max": [1.1400891542434692, 0.40109914541244507, 1.0407822132110596],
+      "min": [-1.1400889158248901, -0.6989008784294128, -0.33130669593811035],
       "type": "VEC3"
     },
     {
