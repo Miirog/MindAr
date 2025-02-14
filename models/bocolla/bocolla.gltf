@@ -68,17 +68,17 @@
     {
       "mimeType": "image/png",
       "name": "Part_Normal",
-      "uri": "public/img/textures/Part_Normal.png"
+      "uri": "textures/Part_Normal.png"
     },
     {
       "mimeType": "image/png",
       "name": "Part_BaseColor",
-      "uri": "public/img/textures/Part_BaseColor.png"
+      "uri": "textures/Part_BaseColor.png"
     },
     {
       "mimeType": "image/png",
       "name": "Part_Metallic-Part_Roughness",
-      "uri": "public/img/textures/Part_Metallic-Part_Roughness.png"
+      "uri": "textures/Part_Metallic-Part_Roughness.png"
     }
   ],
   "accessors": [
