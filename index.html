@@ -17,13 +17,14 @@
         <a-asset-item id="avatarModel" src="models/bocolla/bocolla.gltf"></a-asset-item>
       </a-assets>
 
+      <a-camera position="0 0 0" look-controls="enabled:  false"></a-camera>
       <div id="background_color"></div>
       <a-light type="directional" color="#ffffff" intensity="10" position="1 1 0"></a-light>
       <a-light type="directional" color="#ffffff" intensity="5" position="0 0 -90"></a-light>
       <a-light type="directional" color="#ffffff" intensity="5" position="0 0 90"></a-light>
       
       <a-gltf-model id="model" scale="0.3 0.3 0.3" src="#avatarModel" visible="true"/>
-      
+
       <a-entity mindar-image-target="targetIndex: 0" id="a-entity">
       </a-entity>
       <div id="bottomBox">
