@@ -110,9 +110,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
   });
 
   let initialDistance = null;
-  let initialScale = 0.3; // Initial scale of the model
-  const maxScale = 3.0; // Maximum scale
-  const minScale = 0.1; // Minimum scale
+  let initialScale = 0.3;
+  const maxScale = 3.0;
+  const minScale = 0.1;
 
   function getDistance(touches) {
     const dx = touches[0].clientX - touches[1].clientX;
@@ -121,7 +121,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
   }
 
   function updateScale(scale) {
-    // Ensure the scale stays within the min and max limits
     scale = Math.max(minScale, Math.min(maxScale, scale));
     model.setAttribute("scale", `${scale} ${scale} ${scale}`);
   }
