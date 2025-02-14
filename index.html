@@ -11,7 +11,7 @@
     <img id="logo" src="public/img/stamper_logo_v1.png"/>
     <button id="nextObject"></button>
     <button id="previousObject"></button>
-    <a-scene  id="trackRotation" mindar-image=" uiScanning:no; uiLoading:no; filterMinCF: 0.0001; filterBeta: 1" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+    <a-scene  id="trackRotation" mindar-image="imageTargetSrc: ./targets/targets.mind; uiScanning:no; uiLoading:no; filterMinCF: 0.0001; filterBeta: 1" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
       <a-assets>
         <img id="card" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/image-tracking/assets/card-example/card.png" />
         <a-asset-item id="avatarModel" src="models/bocolla/bocolla.gltf"></a-asset-item>
@@ -25,7 +25,6 @@
 
       <a-box color="red"></a-box>
       <a-gltf-model id="model" rotation="0 0 0" position="0 0 0" scale="0.3 0.3 0.3" src="#avatarModel" visible="true"></a-gltf-model>
-
 
       <a-entity mindar-image-target="targetIndex: 0" id="a-entity">
         <a-gltf-model id="model" rotation="0 0 0" position="0 0 0" scale="0.3 0.3 0.3" src="#avatarModel" visible="true"></a-gltf-model>
