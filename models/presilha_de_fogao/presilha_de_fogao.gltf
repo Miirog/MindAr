@@ -1,134 +1,150 @@
 {
-	"asset":{
-		"generator":"Khronos glTF Blender I/O v4.3.47",
-		"version":"2.0"
-	},
-	"extensionsUsed":[
-		"KHR_materials_specular"
-	],
-	"scene":0,
-	"scenes":[
-		{
-			"name":"Scene",
-			"nodes":[
-				0
-			]
-		}
-	],
-	"nodes":[
-		{
-			"mesh":0,
-			"name":"05.849.110.45",
-			"rotation":[
-				0.7071068286895752,
-				0,
-				0,
-				0.7071068286895752
-			]
-		}
-	],
-	"materials":[
-		{
-			"doubleSided":true,
-			"extensions":{
-				"KHR_materials_specular":{
-					"specularFactor":0
-				}
-			},
-			"name":"Opaque(191,191,191).003",
-			"pbrMetallicRoughness":{
-				"baseColorFactor":[
-					0.749019980430603,
-					0.749019980430603,
-					0.749019980430603,
-					1
-				],
-				"metallicFactor":0
-			}
-		}
-	],
-	"meshes":[
-		{
-			"name":"05.849.110.45",
-			"primitives":[
-				{
-					"attributes":{
-						"POSITION":0,
-						"NORMAL":1,
-						"TEXCOORD_0":2
-					},
-					"indices":3,
-					"material":0
-				}
-			]
-		}
-	],
-	"accessors":[
-		{
-			"bufferView":0,
-			"componentType":5126,
-			"count":1592,
-			"max":[
-				1.1407825946807861,
-				0.3921448886394501,
-				1.0205562114715576
-			],
-			"min":[
-				-1.1381484270095825,
-				-0.7078551054000854,
-				-0.35241779685020447
-			],
-			"type":"VEC3"
-		},
-		{
-			"bufferView":1,
-			"componentType":5126,
-			"count":1592,
-			"type":"VEC3"
-		},
-		{
-			"bufferView":2,
-			"componentType":5126,
-			"count":1592,
-			"type":"VEC2"
-		},
-		{
-			"bufferView":3,
-			"componentType":5123,
-			"count":4380,
-			"type":"SCALAR"
-		}
-	],
-	"bufferViews":[
-		{
-			"buffer":0,
-			"byteLength":19104,
-			"byteOffset":0,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":19104,
-			"byteOffset":19104,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":12736,
-			"byteOffset":38208,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":8760,
-			"byteOffset":50944,
-			"target":34963
-		}
-	],
-	"buffers":[
-		{
-			"byteLength":59704,
-			"uri":"presilha_de_fogao.bin"
-		}
-	]
+  "asset": {
+    "generator": "Khronos glTF Blender I/O v4.3.47",
+    "version": "2.0"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [0]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "05.849.110.45",
+      "rotation": [0.7071068286895752, 0, 0, 0.7071068286895752]
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "name": "05.849.110.45",
+      "normalTexture": {
+        "index": 0
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 1
+        },
+        "metallicRoughnessTexture": {
+          "index": 2
+        }
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "05.849.110.002",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3,
+          "material": 0
+        }
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    }
+  ],
+  "images": [
+    {
+      "mimeType": "image/png",
+      "name": "Part_Normal",
+      "uri": "public/img/textures/Part_Normal.png"
+    },
+    {
+      "mimeType": "image/png",
+      "name": "Part_BaseColor",
+      "uri": "public/img/textures/Part_BaseColor.png"
+    },
+    {
+      "mimeType": "image/png",
+      "name": "Part_Metallic-Part_Roughness",
+      "uri": "public/img/textures/Part_Metallic-Part_Roughness.png"
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 1234,
+      "max": [1.1400890350341797, 0.550000011920929, 1.263700008392334],
+      "min": [-1.1400890350341797, -0.550000011920929, -0.1083889976143837],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 1234,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 1234,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5123,
+      "count": 3792,
+      "type": "SCALAR"
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 14808,
+      "byteOffset": 0,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 14808,
+      "byteOffset": 14808,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 9872,
+      "byteOffset": 29616,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 7584,
+      "byteOffset": 39488,
+      "target": 34963
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 47072,
+      "uri": "presilha_de_fogao.bin"
+    }
+  ]
 }

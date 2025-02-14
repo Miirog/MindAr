@@ -1,134 +1,150 @@
 {
-	"asset":{
-		"generator":"Khronos glTF Blender I/O v4.3.47",
-		"version":"2.0"
-	},
-	"extensionsUsed":[
-		"KHR_materials_specular"
-	],
-	"scene":0,
-	"scenes":[
-		{
-			"name":"Scene",
-			"nodes":[
-				0
-			]
-		}
-	],
-	"nodes":[
-		{
-			"mesh":0,
-			"name":"27.818.048.70",
-			"rotation":[
-				0.70710688829422,
-				0,
-				0,
-				0.7071066498756409
-			]
-		}
-	],
-	"materials":[
-		{
-			"doubleSided":true,
-			"extensions":{
-				"KHR_materials_specular":{
-					"specularFactor":0
-				}
-			},
-			"name":"Opaque(191,191,191).004",
-			"pbrMetallicRoughness":{
-				"baseColorFactor":[
-					0.749019980430603,
-					0.749019980430603,
-					0.749019980430603,
-					1
-				],
-				"metallicFactor":0
-			}
-		}
-	],
-	"meshes":[
-		{
-			"name":"27.818.048.001",
-			"primitives":[
-				{
-					"attributes":{
-						"POSITION":0,
-						"NORMAL":1,
-						"TEXCOORD_0":2
-					},
-					"indices":3,
-					"material":0
-				}
-			]
-		}
-	],
-	"accessors":[
-		{
-			"bufferView":0,
-			"componentType":5126,
-			"count":2270,
-			"max":[
-				0.2406863272190094,
-				0.7106875777244568,
-				0.6171213388442993
-			],
-			"min":[
-				-0.2705046534538269,
-				-0.7657724022865295,
-				-0.5828787088394165
-			],
-			"type":"VEC3"
-		},
-		{
-			"bufferView":1,
-			"componentType":5126,
-			"count":2270,
-			"type":"VEC3"
-		},
-		{
-			"bufferView":2,
-			"componentType":5126,
-			"count":2270,
-			"type":"VEC2"
-		},
-		{
-			"bufferView":3,
-			"componentType":5123,
-			"count":7056,
-			"type":"SCALAR"
-		}
-	],
-	"bufferViews":[
-		{
-			"buffer":0,
-			"byteLength":27240,
-			"byteOffset":0,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":27240,
-			"byteOffset":27240,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":18160,
-			"byteOffset":54480,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":14112,
-			"byteOffset":72640,
-			"target":34963
-		}
-	],
-	"buffers":[
-		{
-			"byteLength":86752,
-			"uri":"porca_rapida-modelo27.bin"
-		}
-	]
+  "asset": {
+    "generator": "Khronos glTF Blender I/O v4.3.47",
+    "version": "2.0"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [0]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "27.818.048.70",
+      "rotation": [0.7071068286895752, 0, 0, 0.7071068286895752]
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "name": "27.818.048.70",
+      "normalTexture": {
+        "index": 0
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 1
+        },
+        "metallicRoughnessTexture": {
+          "index": 2
+        }
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "27.818.048.001",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3,
+          "material": 0
+        }
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    }
+  ],
+  "images": [
+    {
+      "mimeType": "image/png",
+      "name": "Part_Normal",
+      "uri": "public/img/textures/Part_Normal.png"
+    },
+    {
+      "mimeType": "image/png",
+      "name": "Part_BaseColor",
+      "uri": "public/img/textures/Part_BaseColor.png"
+    },
+    {
+      "mimeType": "image/png",
+      "name": "Part_Metallic-Part_Roughness",
+      "uri": "public/img/textures/Part_Metallic-Part_Roughness.png"
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 1658,
+      "max": [0.2861909866333008, 0, 0.6000000238418579],
+      "min": [-0.22499999403953552, -1.4764599800109863, -0.6000000238418579],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 1658,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 1658,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5123,
+      "count": 6288,
+      "type": "SCALAR"
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 19896,
+      "byteOffset": 0,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 19896,
+      "byteOffset": 19896,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 13264,
+      "byteOffset": 39792,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 12576,
+      "byteOffset": 53056,
+      "target": 34963
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 65632,
+      "uri": "porca_rapida-modelo27.bin"
+    }
+  ]
 }
