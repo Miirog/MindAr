@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const bottomBoxTexts = [
     {
       title: "Bócolla Oblonga A",
-      description1: "Amplo catálogo ;",
+      description1: "Amplo catálogo;",
       description2: "Diversidade de formatos e propriedades;",
     },
     {
