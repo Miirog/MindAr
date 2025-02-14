@@ -23,27 +23,27 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
   const bottomBoxTexts = [
     {
-      title: "Bócolla",
+      title: "Bócolla Oblonga A",
       description1: "Amplo catálogo ;",
       description2: "Diversidade de formatos e propriedades;",
     },
     {
-      title: "Clip - Seta 01",
+      title: "Clip",
       description1: "Versatilidade;",
       description2: "Durabilidade & Segurança;",
     },
     {
-      title: "Clip - Seta 02",
+      title: "Clip",
       description2: "Versatilidade;",
       description2: "Durabilidade & Segurança;",
     },
     {
-      title: "Porca Rápida - modelo 14",
+      title: "Porca Rápida - 14",
       description1: "Praticidade;",
       description2: "Fácil Instalação;",
     },
     {
-      title: "Porca Rápida - modelo 27",
+      title: "Porca Rápida - 27",
       description1: "Praticidade;",
       description2: "Fácil Instalação;",
     },
