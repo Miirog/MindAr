@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const loader = new GLTFLoader(); // Make sure THREE.GLTFLoader is included
 
   loader.load(
-    "models/bocolla/bocolla.gltf",
+    "models\bocolla\bocolla.gltf",
     function (gltf) {
       const model = gltf.scene;
       scene.add(model);
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
       // 2. Handle Model Scaling (if necessary)
       const box = new THREE.Box3().setFromObject(model);
-      const size = box.getSize(new THREE.Vector3());
+      const size = box.getSize(new THREE.Vector3(10, 10, 10));
       const modelScale = Math.max(size.x, size.y, size.z); // Get largest dimension
       if (modelScale > 1) {
         // If model is too big
