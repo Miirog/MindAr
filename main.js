@@ -45,39 +45,39 @@ document.addEventListener("DOMContentLoaded", (event) => {
     camera.position.z = box.getSize(new THREE.Vector3()).z * 1.5; // Example: Position camera based on model size
   });
 
-  let stream;
+  // let stream;
 
-  async function getCameraStream() {
-    try {
-      const constraints = {
-        video: {
-          facingMode: { exact: "environment" },
-        },
-      };
+  // async function getCameraStream() {
+  //   try {
+  //     const constraints = {
+  //       video: {
+  //         facingMode: { exact: "environment" },
+  //       },
+  //     };
 
-      stream = await navigator.mediaDevices.getUserMedia(constraints);
-      video.srcObject = stream;
-    } catch (error) {
-      console.error("Error accessing camera:", error);
+  //     stream = await navigator.mediaDevices.getUserMedia(constraints);
+  //     video.srcObject = stream;
+  //   } catch (error) {
+  //     console.error("Error accessing camera:", error);
 
-      try {
-        stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        video.srcObject = stream;
-        console.warn("Rear camera not available. Using default camera.");
-      } catch (fallbackError) {
-        console.error("Error accessing default camera:", fallbackError);
-        alert(
-          "Error accessing camera. Please make sure you have a camera and grant permissions."
-        );
-      }
-    }
-  }
+  //     try {
+  //       stream = await navigator.mediaDevices.getUserMedia({ video: true });
+  //       video.srcObject = stream;
+  //       console.warn("Rear camera not available. Using default camera.");
+  //     } catch (fallbackError) {
+  //       console.error("Error accessing default camera:", fallbackError);
+  //       alert(
+  //         "Error accessing camera. Please make sure you have a camera and grant permissions."
+  //       );
+  //     }
+  //   }
+  // }
 
-  getCameraStream();
+  // getCameraStream();
 
-  window.addEventListener("beforeunload", () => {
-    if (stream) {
-      stream.getTracks().forEach((track) => track.stop());
-    }
-  });
+  // window.addEventListener("beforeunload", () => {
+  //   if (stream) {
+  //     stream.getTracks().forEach((track) => track.stop());
+  //   }
+  // });
 });
