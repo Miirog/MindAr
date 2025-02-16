@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   scene.add(pointLight);
 
   // Load GLTF model
-  const loader = new THREE.GLTFLoader(); // Make sure THREE.GLTFLoader is included
+  const loader = new GLTFLoader(); // Make sure THREE.GLTFLoader is included
 
   loader.load(
     "models/bocolla/bocolla.gltf",
