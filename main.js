@@ -1,4 +1,4 @@
-import * as THREE from "https://cdn.skypack.dev/three"; // Or your desired version
+import * as THREE from "three"; // Or your desired version
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 document.addEventListener("DOMContentLoaded", (event) => {
