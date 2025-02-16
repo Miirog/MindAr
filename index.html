@@ -29,8 +29,8 @@
 <canvas id="canvas"></canvas>
 
 <script type="module">
-import * as THREE from 'https://cdn.skypack.dev/three@0.137'; // Or your preferred Three.js import
-import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.137/examples/jsm/loaders/GLTFLoader.js';
+import * as THREE from 'https://unpkg.com/three@0.137/build/three.module.js';
+import { GLTFLoader } from 'https://unpkg.com/three@0.137/examples/jsm/loaders/GLTFLoader.js';
 
 async function main() {
   const video = document.getElementById('video');
@@ -55,7 +55,7 @@ async function main() {
 
   // Load GLTF model
   const loader = new GLTFLoader();
-  loader.load('modles/bocolla/bocolla.gltf', (gltf) => { 
+  loader.load('models/bocolla/bocolla.gltf', (gltf) => { 
     const model = gltf.scene;
     scene.add(model);
 
@@ -67,7 +67,6 @@ async function main() {
   }, (error) => {
     console.error('Error loading GLTF:', error);
   });
-
 
   // Animation loop
   function animate() {
