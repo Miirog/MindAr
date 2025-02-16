@@ -28,22 +28,33 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
   // Load GLTF model
   const loader = new GLTFLoader();
-  loader.load(`models/bocolla/bocolla.gltf`, (gltf) => {
-    // Replace with your model path
-    const model = gltf.scene;
 
-    // Center the model (important!)
-    const box = new THREE.Box3().setFromObject(model);
-    const center = box.getCenter(new THREE.Vector3());
-    model.position.x = -center.x;
-    model.position.y = -center.y;
-    model.position.z = -center.z;
+  loader.load(
+    "models/bocolla/bocolla.gltf",
+    function (gltf) {
+      scene.add(gltf.scene);
+    },
+    undefined,
+    function (error) {
+      console.error(error);
+    }
+  );
+  // loader.load(`models/bocolla/bocolla.gltf`, (gltf) => {
+  //   // Replace with your model path
+  //   const model = gltf.scene;
 
-    scene.add(model);
+  //   // Center the model (important!)
+  //   const box = new THREE.Box3().setFromObject(model);
+  //   const center = box.getCenter(new THREE.Vector3());
+  //   model.position.x = -center.x;
+  //   model.position.y = -center.y;
+  //   model.position.z = -center.z;
 
-    // Adjust camera position (after model is loaded and centered)
-    camera.position.z = box.getSize(new THREE.Vector3()).z * 1.5; // Example: Position camera based on model size
-  });
+  //   scene.add(model);
+
+  //   // Adjust camera position (after model is loaded and centered)
+  //   camera.position.z = box.getSize(new THREE.Vector3()).z * 1.5; // Example: Position camera based on model size
+  // });
 
   // let stream;
 
