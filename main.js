@@ -1,6 +1,6 @@
-import * as THREE from "three";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import * as THREE from "https://cdn.skypack.dev/three@0.158"; // Or your desired version
+import { OrbitControls } from "https://cdn.skypack.dev/three@0.158/examples/jsm/controls/OrbitControls.js";
+import { GLTFLoader } from "https://cdn.skypack.dev/three@0.158/examples/jsm/loaders/GLTFLoader.js";
 
 document.addEventListener("DOMContentLoaded", (event) => {
   const video = document.getElementById("video");
