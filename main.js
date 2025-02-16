@@ -1,6 +1,5 @@
 import * as THREE from "https://cdn.skypack.dev/three@0.158"; // Or your desired version
-import { OrbitControls } from "https://cdn.skypack.dev/three@0.158/examples/jsm/controls/OrbitControls.js";
-import { GLTFLoader } from "https://cdn.skypack.dev/three@0.158/examples/jsm/loaders/GLTFLoader.js";
+import { GLTFLoader } from "https://unpkg.com/three@0.158/examples/jsm/loaders/GLTFLoader.js"; // Direct link
 
 document.addEventListener("DOMContentLoaded", (event) => {
   const video = document.getElementById("video");
@@ -44,11 +43,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     // Adjust camera position (after model is loaded and centered)
     camera.position.z = box.getSize(new THREE.Vector3()).z * 1.5; // Example: Position camera based on model size
-
-    // Optional: Add OrbitControls (for camera interaction)
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.target.set(0, 0, 0); // Set the center of rotation
-    controls.update(); // Update controls once initially
   });
 
   let stream;
