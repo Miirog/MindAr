@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const loader = new GLTFLoader(); // Make sure THREE.GLTFLoader is included
 
   loader.load(
-    "models\bocolla\bocolla.gltf",
+    "models/bocolla/bocolla.gltf",
     function (gltf) {
       const model = gltf.scene;
       scene.add(model);
