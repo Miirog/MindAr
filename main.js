@@ -1,5 +1,5 @@
 import * as THREE from "https://cdn.skypack.dev/three"; // Or your desired version
-import { GLTFLoader } from "https://unpkg.com/browse/three@0.91.0/examples/js/loaders/GLTFLoader.js"; // Direct link
+import { GLTFLoader } from "https://unpkg.com/three@0.91.0/examples/js/loaders/GLTFLoader.js";
 
 document.addEventListener("DOMContentLoaded", (event) => {
   const video = document.getElementById("video");
