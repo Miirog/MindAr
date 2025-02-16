@@ -1,7 +1,3 @@
-import * as THREE from "three";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-
 document.addEventListener("DOMContentLoaded", (event) => {
   const video = document.getElementById("video");
   const canvas = document.getElementById("canvas");
