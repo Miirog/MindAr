@@ -1,123 +1,70 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Camera Access</title>
-<style>
-  body, html {
-    margin: 0; /* Remove default margins */
-    padding: 0; /* Remove default padding */
-    height: 100%; /* Make body and html take up full viewport height */
-    overflow: hidden; /* Prevent scrollbars */
-  }
+  <head>
+    <title>Camera Access</title>
+    <link rel="stylesheet" href="styles.css">
 
-  #video {
-    position: fixed; /* Fixed positioning to cover the entire viewport */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Maintain aspect ratio and cover the entire area */
-    z-index: -1; /* Place the video behind other content (if any) */
-  }
+  </head>
+  <body>
+    <video id="video" autoplay playsinline></video>
+    <canvas id="canvas"></canvas>  <img id="capturedImage" alt="Captured Image">  <script>
+      const video = document.getElementById('video');
+      const snapButton = document.getElementById('snap');
+      const canvas = document.getElementById('canvas');
+      const capturedImage = document.getElementById('capturedImage');
+      let stream; 
 
-  #snap {
-    position: absolute; /* Position the button */
-    top: 20px; /* Adjust as needed */
-    left: 50%;
-    transform: translateX(-50%); /* Center the button */
-    z-index: 1; /* Place the button above the video */
-    padding: 10px 20px;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-
-  #capturedImage {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    max-width: 90%; /* Adjust as needed */
-    max-height: 90%; /* Adjust as needed */
-    z-index: 1; /* Place the image above the video */
-    display: none;
-  }
-
-  #canvas {
-    display: none;
-  }
-</style>
-</head>
-<body>
-
-  <h1>Camera Access</h1>
-
-  <video id="video" autoplay playsinline></video>
-  <button id="snap">Take Photo</button>
-  <canvas id="canvas"></canvas>  <img id="capturedImage" alt="Captured Image">  <script>
-    const video = document.getElementById('video');
-    const snapButton = document.getElementById('snap');
-    const canvas = document.getElementById('canvas');
-    const capturedImage = document.getElementById('capturedImage');
-    let stream; // To store the video stream
-
-    // Get user media (camera access)
-    async function getCameraStream() {
-      try {
-        // Define constraints for the rear camera
-        const constraints = {
-          video: {
-            facingMode: { exact: "environment" } // Use "environment" for back/rear camera
-          }
-        };
-
-        stream = await navigator.mediaDevices.getUserMedia(constraints);
-        video.srcObject = stream;
-      } catch (error) {
-        console.error('Error accessing camera:', error);
-
-        // Fallback to the default camera if the rear camera is not available or permission is denied.
+      async function getCameraStream() {
         try {
-          stream = await navigator.mediaDevices.getUserMedia({ video: true }); // Default constraints
-          video.srcObject = stream;
-          console.warn("Rear camera not available. Using default camera.");
+          const constraints = {
+            video: {
+              facingMode: { exact: "environment" }
+            }
+          };
 
-        } catch (fallbackError) {
-          console.error("Error accessing default camera:", fallbackError);
-          alert('Error accessing camera. Please make sure you have a camera and grant permissions.');
+          stream = await navigator.mediaDevices.getUserMedia(constraints);
+          video.srcObject = stream;
+        } catch (error) {
+          console.error('Error accessing camera:', error);
+
+          try {
+            stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            video.srcObject = stream;
+            console.warn("Rear camera not available. Using default camera.");
+
+          } catch (fallbackError) {
+            console.error("Error accessing default camera:", fallbackError);
+            alert('Error accessing camera. Please make sure you have a camera and grant permissions.');
+          }
         }
       }
-    }
 
 
-    getCameraStream(); // Call the function to start the camera
+      getCameraStream(); 
 
 
-    snapButton.addEventListener('click', () => {
-        if (stream) { // Check if the stream is available
-            const context = canvas.getContext('2d');
-            canvas.width = video.videoWidth;  // Set canvas dimensions to video dimensions
-            canvas.height = video.videoHeight;
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      snapButton.addEventListener('click', () => {
+          if (stream) { 
+              const context = canvas.getContext('2d');
+              canvas.width = video.videoWidth;  
+              canvas.height = video.videoHeight;
+              context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-            // Convert the canvas content to a data URL (e.g., base64)
-            const imageDataURL = canvas.toDataURL('image/png'); // You can change the format (e.g., 'image/jpeg')
+              const imageDataURL = canvas.toDataURL('image/png');
 
-            capturedImage.src = imageDataURL; // Set the image source
-            capturedImage.style.display = 'block'; // Make the image visible
-        }
-    });
+              capturedImage.src = imageDataURL; 
+              capturedImage.style.display = 'block'; 
+          }
+      });
 
 
-    // Optional: Stop the camera stream when the page is closed or unloaded.
-    window.addEventListener('beforeunload', () => {
-        if (stream) {
-            stream.getTracks().forEach(track => track.stop());
-        }
-    });
+      window.addEventListener('beforeunload', () => {
+          if (stream) {
+              stream.getTracks().forEach(track => track.stop());
+          }
+      });
 
-  </script>
+    </script>
 
-</body>
+  </body>
 </html>
