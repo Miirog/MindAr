@@ -1,21 +1,103 @@
 <!DOCTYPE html>
-
 <html>
-  <head>
-    <title>
-      Stamper
-    </title>
-    <meta name="description" content="Stamper Demo">
-    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
-    <script src="https://jeromeetienne.github.com.io/AR.js/aframe/build/aframe-ar.js"></script>
-    <link rel="stylesheet" href="styles.css">
-  </head>
+<head>
+<title>AR with Camera and GLTF</title>
+<style>
+  body { margin : 0px; overflow: hidden; }
+  #video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* or contain, depending on your needs */
+    z-index: 0; /* Ensure video is behind the canvas */
+  }
+  #canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Canvas on top of video */
+  }
+</style>
+</head>
+<body>
 
-  <body>
-    <a-scene embedded arjs>
-      <a-entity scale="0.3 0.3 0.3">
-        <a-entity gltf-model="models/bocolla/bocolla.gltf" scale="1 1 1">
-      </a-entity>
-    </a-scene>
-  </body>
+<video id="video" autoplay playsinline></video>
+<canvas id="canvas"></canvas>
+
+<script type="module">
+import * as THREE from 'https://cdn.skypack.dev/three@0.137'; // Or your preferred Three.js import
+import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.137/examples/jsm/loaders/GLTFLoader.js';
+
+async function main() {
+  const video = document.getElementById('video');
+  const canvas = document.getElementById('canvas');
+  const context = canvas.getContext('2d');
+
+  // Get user media (camera access)
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } }); // Front camera
+    video.srcObject = stream;
+  } catch (error) {
+    console.error('Error accessing camera:', error);
+    return; // Exit if camera access fails
+  }
+
+  // Three.js setup
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true }); // Alpha for transparency
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setClearColor(0x000000, 0); // Transparent background
+
+  // Load GLTF model
+  const loader = new GLTFLoader();
+  loader.load('modles/bocolla/bocolla.gltf', (gltf) => { 
+    const model = gltf.scene;
+    scene.add(model);
+
+    // Position and scale the model as needed
+    model.scale.set(0.1, 0.1, 0.1); // Example scaling
+    model.position.set(0, 0, -1);   // Example positioning (adjust z for depth)
+  }, (xhr) => {
+    console.log((xhr.loaded / xhr.total * 100) + '% loaded'); // Optional: Loading progress
+  }, (error) => {
+    console.error('Error loading GLTF:', error);
+  });
+
+
+  // Animation loop
+  function animate() {
+    requestAnimationFrame(animate);
+
+    // Draw the video frame on the canvas
+    if (video.readyState === video.HAVE_ENOUGH_DATA) {
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    }
+
+    renderer.render(scene, camera);
+  }
+
+  // Resize handling
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+  });
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  animate();
+}
+
+main();
+
+</script>
+
+</body>
 </html>
