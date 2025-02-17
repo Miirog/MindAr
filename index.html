@@ -5,14 +5,21 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <img id="logo" src="public/img/stamper_logo_v1.png" />
     <script src="https://cdn.jsdelivr.net/npm/three@latest/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@latest/examples/js/loaders/GLTFLoader.js"></script>
     <script src=""></script>
     <script type="module" src="main.js"></script>
     <video id="video" autoplay playsinline></video>
     <canvas id="canvas"></canvas>
+    <div id="background_color"></div>
 
     <button id="nextObject"></button>
     <button id="previousObject"></button>
+    <div id="bottomBox">
+      <h2></h2>
+      <p id="description1"></p>
+      <p id="description2"></p>
+    </div>
   </body>
 </html>
