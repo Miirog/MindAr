@@ -29,8 +29,22 @@
             scene.add(model);
             camera.position.z = 5;
 
-            const ambientLight = new THREE.AmbientLight(0x404040);
-            scene.add(ambientLight);
+// Add a directional light that targets the model:
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // Increased intensity
+    scene.add(directionalLight);
+
+    // Set the light's target to the model (after the model is loaded):
+    directionalLight.target = model; // Very important: target the model
+    directionalLight.position.set(5, 5, 5); // Adjust light position
+
+    // Optional: Add a helper to visualize the light's direction (for debugging)
+    const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 5);
+    scene.add(directionalLightHelper);
+
+
+    const ambientLight = new THREE.AmbientLight(0x404040); // Soft white light
+    scene.add(ambientLight);
+
 
             function animate() {
               requestAnimationFrame(animate);
