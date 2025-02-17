@@ -5,23 +5,16 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/three@latest/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@latest/examples/js/loaders/GLTFLoader.js"></script>
     <script src=""></script>
     <script type="module">
-      import * as THREE from 'https://cdn.jsdelivr.net/npm/three@latest/build/three.module.js';
-        import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@latest/examples/jsm/loaders/GLTFLoader.js';
-        import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@latest/examples/jsm/controls/OrbitControls.js';
-
-
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
         renderer.setClearColor(0xadd8e6);
-
-        // OrbitControls (optional, for scene navigation)
-const controls = new OrbitControls(camera, renderer.domElement);
-
 
         const loader = new THREE.GLTFLoader();
 
@@ -169,7 +162,6 @@ renderer.domElement.addEventListener('touchend', () => {
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
-    controls.update(); // Update OrbitControls
     renderer.render(scene, camera);
 }
 
