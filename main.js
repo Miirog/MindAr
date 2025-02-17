@@ -1,81 +1,187 @@
-import * as THREE from "three"; // Or your desired version
-import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-
 document.addEventListener("DOMContentLoaded", (event) => {
   const video = document.getElementById("video");
   const canvas = document.getElementById("canvas");
 
   const scene = new THREE.Scene();
-
-  // Camera
   const camera = new THREE.PerspectiveCamera(
     75,
     window.innerWidth / window.innerHeight,
     0.1,
     1000
   );
-  camera.position.z = 5; // Adjust z position to see the cube
-
-  // Renderer
   const renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
+  renderer.setClearColor(0xadd8e6);
 
-  // Instantiate a GLTFLoader
-  const loader = new GLTFLoader();
+  const loader = new THREE.GLTFLoader();
 
-  const ambientLight = new THREE.AmbientLight(0x404040); // Soft white light
-  scene.add(ambientLight);
+  let model;
+  let isRotating = false;
+  let previousTouchX = 0;
+  let previousTouchY = 0;
+  let currentTouchX = 0;
+  let currentTouchY = 0;
 
-  // For more realistic lighting, add a DirectionalLight or PointLight:
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-  directionalLight.position.set(1, 1, 1).normalize();
-  scene.add(directionalLight);
+  // Pinch Gesture Handling
+  let touch0StartPosition = null;
+  let touch1StartPosition = null;
+  let isPinching = false;
+  const scaleFactor = 0.01; // Adjust scaling speed
+  const minScale = 0.1;
+  const maxScale = 5;
 
-  renderer.setClearColor(0xadd8e6); // Light blue background
-
-  // Load your GLTF model
   loader.load(
     "models/bocolla/bocolla.gltf",
     (gltf) => {
-      // Replace with your model path
-      const model = gltf.scene; // Get the loaded scene
+      model = gltf.scene;
+      scene.add(model);
+      camera.position.z = 5;
 
-      // Optional: Scale, position, or rotate the model
-      model.scale.set(10, 10, 10); // Example scaling
-      model.position.set(0, 0, 0); // Center the model
+      // Add a directional light that targets the model:
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 10); // Increased intensity
+      scene.add(directionalLight);
 
-      scene.add(model); // Add the model to the scene
+      // Set the light's target to the model (after the model is loaded):
+      directionalLight.target = model; // Very important: target the model
+      directionalLight.position.set(5, 5, 5); // Adjust light position
 
-      // Optional: If your model has animations, you can access and play them:
-      if (gltf.animations.length > 0) {
-        const mixer = new THREE.AnimationMixer(model); // Create an AnimationMixer
-        gltf.animations.forEach((animation) => {
-          const action = mixer.clipAction(animation);
-          action.play(); // Start playing the animation
-        });
+      // Optional: Add a helper to visualize the light's direction (for debugging)
+      const directionalLightHelper = new THREE.DirectionalLightHelper(
+        directionalLight,
+        5
+      );
+      scene.add(directionalLightHelper);
 
-        // Update the animation mixer in your animate loop:
-        function animate() {
-          requestAnimationFrame(animate);
-          mixer.update(0.016); // Delta time (adjust as needed)
+      const ambientLight = new THREE.AmbientLight(0x404040); // Soft white light
+      scene.add(ambientLight);
 
-          renderer.render(scene, camera);
+      function animate() {
+        requestAnimationFrame(animate);
+
+        if (isRotating && model) {
+          const deltaX = currentTouchX - previousTouchX;
+          const deltaY = currentTouchY - previousTouchY;
+
+          model.rotation.y += deltaX * 0.01; // Rotate around Y-axis (vertical)
+          model.rotation.x += deltaY * 0.01; // Rotate around X-axis (horizontal)
+
+          previousTouchX = currentTouchX;
+          previousTouchY = currentTouchY;
         }
-      } else {
-        function animate() {
-          requestAnimationFrame(animate);
-          renderer.render(scene, camera);
-        }
+
+        renderer.render(scene, camera);
       }
+
+      animate();
     },
-    (xhr) => {
-      console.log((xhr.loaded / xhr.total) * 100 + "% loaded"); // Optional: Show loading progress
-    },
+    (xhr) => {},
     (error) => {
-      console.error("An error happened loading the GLTF model:", error);
+      console.error("Error loading GLTF:", error);
     }
   );
+
+  document.addEventListener("touchstart", (event) => {
+    if (event.touches.length === 1 && model) {
+      isRotating = true;
+      currentTouchX = event.touches[0].clientX;
+      currentTouchY = event.touches[0].clientY;
+      previousTouchX = event.touches[0].clientX;
+      previousTouchY = event.touches[0].clientY;
+    }
+  });
+
+  document.addEventListener("touchmove", (event) => {
+    if (event.touches.length === 1 && isRotating) {
+      currentTouchX = event.touches[0].clientX;
+      currentTouchY = event.touches[0].clientY;
+    }
+  });
+
+  document.addEventListener("touchend", () => {
+    isRotating = false;
+  });
+
+  // Optional: Mouse Control (for testing on desktop)
+  document.addEventListener("mousedown", (event) => {
+    isRotating = true;
+    previousTouchX = event.clientX;
+    previousTouchY = event.clientY;
+  });
+
+  document.addEventListener("mousemove", (event) => {
+    if (isRotating) {
+      const deltaX = event.clientX - previousTouchX;
+      const deltaY = event.clientY - previousTouchY;
+      model.rotation.y += deltaX * 0.01;
+      model.rotation.x += deltaY * 0.01;
+      previousTouchX = event.clientX;
+      previousTouchY = event.clientY;
+    }
+  });
+
+  window.addEventListener("resize", () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  renderer.domElement.addEventListener("touchstart", (event) => {
+    if (event.touches.length === 2) {
+      touch0StartPosition = new THREE.Vector2(
+        event.touches[0].clientX,
+        event.touches[0].clientY
+      );
+      touch1StartPosition = new THREE.Vector2(
+        event.touches[1].clientX,
+        event.touches[1].clientY
+      );
+      isPinching = true;
+    }
+  });
+
+  renderer.domElement.addEventListener("touchmove", (event) => {
+    if (isPinching && event.touches.length === 2) {
+      const touch0CurrentPosition = new THREE.Vector2(
+        event.touches[0].clientX,
+        event.touches[0].clientY
+      );
+      const touch1CurrentPosition = new THREE.Vector2(
+        event.touches[1].clientX,
+        event.touches[1].clientY
+      );
+
+      const currentDistance = touch0CurrentPosition.distanceTo(
+        touch1CurrentPosition
+      );
+      const previousDistance =
+        touch0StartPosition.distanceTo(touch1StartPosition);
+
+      const distanceDelta = currentDistance - previousDistance;
+      const scaleChange = distanceDelta * scaleFactor;
+
+      let newScale = cube.scale.x + scaleChange; // Scale applied uniformly
+
+      newScale = Math.max(minScale, Math.min(maxScale, newScale)); // Clamp scale
+
+      cube.scale.set(newScale, newScale, newScale);
+
+      touch0StartPosition = touch0CurrentPosition;
+      touch1StartPosition = touch1CurrentPosition;
+    }
+  });
+
+  renderer.domElement.addEventListener("touchend", () => {
+    isPinching = false;
+  });
+
+  // Animation loop
+  function animate() {
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+  }
+
+  animate();
 
   // Handle window resizing
   window.addEventListener("resize", () => {
@@ -83,23 +189,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
-
-  // loader.load(`models/bocolla/bocolla.gltf`, (gltf) => {
-  //   // Replace with your model path
-  //   const model = gltf.scene;
-
-  //   // Center the model (important!)
-  //   const box = new THREE.Box3().setFromObject(model);
-  //   const center = box.getCenter(new THREE.Vector3());
-  //   model.position.x = -center.x;
-  //   model.position.y = -center.y;
-  //   model.position.z = -center.z;
-
-  //   scene.add(model);
-
-  //   // Adjust camera position (after model is loaded and centered)
-  //   camera.position.z = box.getSize(new THREE.Vector3()).z * 1.5; // Example: Position camera based on model size
-  // });
 
   // let stream;
 
