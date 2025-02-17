@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Three.js Rotation Test</title>
-    <style> body { margin: 0; } canvas { display: block; } </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <script src="https://cdn.jsdelivr.net/npm/three@latest/build/three.min.js"></script>
@@ -20,7 +20,9 @@
         let model;
         let isRotating = false;
         let previousTouchX = 0;
+        let previousTouchY = 0;
         let currentTouchX = 0;
+        let currentTouchY = 0;
 
         loader.load('models/bocolla/bocolla.gltf', (gltf) => {
             model = gltf.scene;
@@ -31,16 +33,21 @@
             scene.add(ambientLight);
 
             function animate() {
-                requestAnimationFrame(animate);
+              requestAnimationFrame(animate);
 
-                if (isRotating && model) {
-                    const deltaX = currentTouchX - previousTouchX;
-                    model.rotation.y += deltaX * 0.01;
-                    previousTouchX = currentTouchX;
-                }
+              if (isRotating && model) {
+                  const deltaX = currentTouchX - previousTouchX;
+                  const deltaY = currentTouchY - previousTouchY;
 
-                renderer.render(scene, camera);
-            }
+                  model.rotation.y += deltaX * 0.01; // Rotate around Y-axis (vertical)
+                  model.rotation.x += deltaY * 0.01; // Rotate around X-axis (horizontal)
+
+                  previousTouchX = currentTouchX;
+                  previousTouchY = currentTouchY;
+              }
+
+              renderer.render(scene, camera);
+          }
 
             animate();
 
@@ -49,25 +56,43 @@
         });
 
         document.addEventListener('touchstart', (event) => {
-            console.log("touchstart", event);
-            if (event.touches.length === 1 && model) {
-                isRotating = true;
-                currentTouchX = event.touches[0].clientX;
-                previousTouchX = event.touches[0].clientX;
-            }
-        });
+    if (event.touches.length === 1 && model) {
+        isRotating = true;
+        currentTouchX = event.touches[0].clientX;
+        currentTouchY = event.touches[0].clientY;
+        previousTouchX = event.touches[0].clientX;
+        previousTouchY = event.touches[0].clientY;
+    }
+});
 
-        document.addEventListener('touchmove', (event) => {
-            console.log("touchmove", event);
-            if (event.touches.length === 1 && isRotating) {
-                currentTouchX = event.touches[0].clientX;
-            }
-        });
+document.addEventListener('touchmove', (event) => {
+    if (event.touches.length === 1 && isRotating) {
+        currentTouchX = event.touches[0].clientX;
+        currentTouchY = event.touches[0].clientY;
+    }
+});
 
-        document.addEventListener('touchend', (event) => {
-            console.log("touchend", event);
-            isRotating = false;
-        });
+document.addEventListener('touchend', () => {
+    isRotating = false;
+});
+
+// Optional: Mouse Control (for testing on desktop)
+document.addEventListener('mousedown', (event) => {
+    isRotating = true;
+    previousTouchX = event.clientX;
+    previousTouchY = event.clientY;
+});
+
+document.addEventListener('mousemove', (event) => {
+    if (isRotating) {
+        const deltaX = event.clientX - previousTouchX;
+        const deltaY = event.clientY - previousTouchY;
+        model.rotation.y += deltaX * 0.01;
+        model.rotation.x += deltaY * 0.01;
+        previousTouchX = event.clientX;
+        previousTouchY = event.clientY;
+    }
+});
 
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
