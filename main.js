@@ -21,31 +21,52 @@ document.addEventListener("DOMContentLoaded", (event) => {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
-  // Cube Geometry and Material
-  const geometry = new THREE.BoxGeometry(); // Default cube size (1, 1, 1)
-  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 }); // Green color
-  const cube = new THREE.Mesh(geometry, material);
-  scene.add(cube);
+  // Instantiate a GLTFLoader
+  const loader = new GLTFLoader();
 
-  // Optional: Add some lights so you can see the cube's faces properly
-  const ambientLight = new THREE.AmbientLight(0x404040); // Soft white light
-  scene.add(ambientLight);
+  // Load your GLTF model
+  loader.load(
+    "models/bocolla/bocolla.gltf",
+    (gltf) => {
+      // Replace with your model path
+      const model = gltf.scene; // Get the loaded scene
 
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5); // White directional light
-  directionalLight.position.set(1, 1, 1).normalize(); // From top right
-  scene.add(directionalLight);
+      // Optional: Scale, position, or rotate the model
+      model.scale.set(1, 1, 1); // Example scaling
+      model.position.set(0, 0, 0); // Center the model
 
-  // Animation loop (for continuous rendering)
-  function animate() {
-    requestAnimationFrame(animate);
-    // Optional: Rotate the cube if you want to see it from different angles
-    // cube.rotation.x += 0.01;
-    // cube.rotation.y += 0.01;
+      scene.add(model); // Add the model to the scene
 
-    renderer.render(scene, camera);
-  }
+      // Optional: If your model has animations, you can access and play them:
+      if (gltf.animations.length > 0) {
+        const mixer = new THREE.AnimationMixer(model); // Create an AnimationMixer
+        gltf.animations.forEach((animation) => {
+          const action = mixer.clipAction(animation);
+          action.play(); // Start playing the animation
+        });
 
-  animate();
+        // Update the animation mixer in your animate loop:
+        function animate() {
+          requestAnimationFrame(animate);
+          mixer.update(0.016); // Delta time (adjust as needed)
+
+          renderer.render(scene, camera);
+        }
+      } else {
+        function animate() {
+          requestAnimationFrame(animate);
+          renderer.render(scene, camera);
+        }
+      }
+      animate();
+    },
+    (xhr) => {
+      console.log((xhr.loaded / xhr.total) * 100 + "% loaded"); // Optional: Show loading progress
+    },
+    (error) => {
+      console.error("An error happened loading the GLTF model:", error);
+    }
+  );
 
   // Handle window resizing
   window.addEventListener("resize", () => {
