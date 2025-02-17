@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
   // Load your GLTF model
   loader.load(
-    "models/bocolla/bocolla.gltf",
+    "models/bocolla/boclla",
     (gltf) => {
       // Replace with your model path
       const model = gltf.scene; // Get the loaded scene
@@ -58,7 +58,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
           renderer.render(scene, camera);
         }
       }
-      animate();
     },
     (xhr) => {
       console.log((xhr.loaded / xhr.total) * 100 + "% loaded"); // Optional: Show loading progress
