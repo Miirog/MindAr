@@ -16,6 +16,8 @@
         document.body.appendChild(renderer.domElement);
         renderer.setClearColor(0xadd8e6);
 
+
+        const { OrbitControls } = THREE.examples.jsm.controls;
         // OrbitControls (optional, for scene navigation)
 const controls = new OrbitControls(camera, renderer.domElement);
 
