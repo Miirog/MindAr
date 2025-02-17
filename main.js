@@ -1,5 +1,18 @@
 document.addEventListener("DOMContentLoaded", (event) => {
   const video = document.getElementById("video");
+  const nextButton = document.getElementById("nextObject");
+  const previousButton = document.getElementById("previousObject");
+
+  let currentModel;
+  const modelSources = [
+    "models/bocolla/bocolla.gltf",
+    "models/clip01/clip_seta01.gltf",
+    "models/clip02/clip_seta02.gltf",
+    "models/porca_rapida14/porca_rapida-modelo14.gltf",
+    "models/porca_rapida27/porca_rapida-modelo27.gltf",
+    "models/presilha_de_fogao/presilha_de_fogao.gltf",
+  ];
+  let currentModelIndex = 0;
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(
@@ -30,55 +43,74 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const minScale = 0.1;
   const maxScale = 5;
 
-  loader.load(
-    "models/bocolla/bocolla.gltf",
-    (gltf) => {
-      model = gltf.scene;
-      scene.add(model);
-      camera.position.z = 5;
+  function loadModel(modelPath) {
+    if (currentModel) {
+      scene.remove(currentModel);
+    }
 
-      // Add a directional light that targets the model:
-      const directionalLight = new THREE.DirectionalLight(0xffffff, 10); // Increased intensity
-      scene.add(directionalLight);
+    loader.load(
+      modelPath,
+      (gltf) => {
+        model = gltf.scene;
+        scene.add(model);
+        camera.position.z = 5;
 
-      // Set the light's target to the model (after the model is loaded):
-      directionalLight.target = model; // Very important: target the model
-      directionalLight.position.set(5, 5, 5); // Adjust light position
+        // Add a directional light that targets the model:
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 10); // Increased intensity
+        scene.add(directionalLight);
 
-      // Optional: Add a helper to visualize the light's direction (for debugging)
-      const directionalLightHelper = new THREE.DirectionalLightHelper(
-        directionalLight,
-        5
-      );
-      scene.add(directionalLightHelper);
+        // Set the light's target to the model (after the model is loaded):
+        directionalLight.target = model; // Very important: target the model
+        directionalLight.position.set(5, 5, 5); // Adjust light position
 
-      const ambientLight = new THREE.AmbientLight(0x404040); // Soft white light
-      scene.add(ambientLight);
+        // Optional: Add a helper to visualize the light's direction (for debugging)
+        const directionalLightHelper = new THREE.DirectionalLightHelper(
+          directionalLight,
+          5
+        );
+        scene.add(directionalLightHelper);
 
-      function animate() {
-        requestAnimationFrame(animate);
+        const ambientLight = new THREE.AmbientLight(0x404040); // Soft white light
+        scene.add(ambientLight);
 
-        if (isRotating && model) {
-          const deltaX = currentTouchX - previousTouchX;
-          const deltaY = currentTouchY - previousTouchY;
+        function animate() {
+          requestAnimationFrame(animate);
 
-          model.rotation.y += deltaX * 0.01; // Rotate around Y-axis (vertical)
-          model.rotation.x += deltaY * 0.01; // Rotate around X-axis (horizontal)
+          if (isRotating && model) {
+            const deltaX = currentTouchX - previousTouchX;
+            const deltaY = currentTouchY - previousTouchY;
 
-          previousTouchX = currentTouchX;
-          previousTouchY = currentTouchY;
+            model.rotation.y += deltaX * 0.01; // Rotate around Y-axis (vertical)
+            model.rotation.x += deltaY * 0.01; // Rotate around X-axis (horizontal)
+
+            previousTouchX = currentTouchX;
+            previousTouchY = currentTouchY;
+          }
+
+          renderer.render(scene, camera);
         }
 
-        renderer.render(scene, camera);
+        animate();
+      },
+      (xhr) => {},
+      (error) => {
+        console.error("Error loading GLTF:", error);
       }
+    );
+  }
 
-      animate();
-    },
-    (xhr) => {},
-    (error) => {
-      console.error("Error loading GLTF:", error);
-    }
-  );
+  loadModel(modelPaths[currentModelIndex]);
+
+  previousButton.addEventListener("click", () => {
+    currentModelIndex =
+      (currentModelIndex - 1 + modelPaths.length) % modelPaths.length; // Wrap around
+    loadModel(modelPaths[currentModelIndex]);
+  });
+
+  nextButton.addEventListener("click", () => {
+    currentModelIndex = (currentModelIndex + 1) % modelPaths.length; // Wrap around
+    loadModel(modelPaths[currentModelIndex]);
+  });
 
   document.addEventListener("touchstart", (event) => {
     if (event.touches.length === 1 && model) {
