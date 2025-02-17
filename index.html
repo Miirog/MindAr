@@ -19,6 +19,10 @@
 
         const loader = new THREE.GLTFLoader();
 
+        let model; // Store the loaded model
+        let isRotating = false;
+        let previousTouchX = 0;
+
         loader.load('models/bocolla/bocolla.gltf', (gltf) => {
             const model = gltf.scene;
             scene.add(model);
@@ -38,16 +42,62 @@
             console.log("Loaded model:", model);
 
             function animate() {
-                requestAnimationFrame(animate);
-                renderer.render(scene, camera);
-            }
-            animate();
+        requestAnimationFrame(animate);
+
+        if (isRotating) {
+            const deltaX = currentTouchX - previousTouchX;
+            model.rotation.y += deltaX * 0.01; // Adjust rotation speed
+            previousTouchX = currentTouchX;
+        }
+
+        renderer.render(scene, camera);
+    }
+
+    animate();
 
         }, (xhr) => {
             console.log((xhr.loaded / xhr.total * 100) + '% loaded');
         }, (error) => {
             console.error('Error loading GLTF:', error);
         });
+
+        let currentTouchX = 0; // Initialize currentTouchX
+
+document.addEventListener('touchstart', (event) => {
+    if (event.touches.length === 1 && model) { // Only rotate with one finger and if model exists
+        isRotating = true;
+        currentTouchX = event.touches[0].clientX;
+        previousTouchX = event.touches[0].clientX;
+    }
+});
+
+document.addEventListener('touchmove', (event) => {
+    if (event.touches.length === 1 && isRotating) {
+        currentTouchX = event.touches[0].clientX;
+    }
+});
+
+document.addEventListener('touchend', () => {
+    isRotating = false;
+});
+
+// Optional: Mouse Control (for testing on desktop)
+document.addEventListener('mousedown', (event) => {
+    isRotating = true;
+    previousTouchX = event.clientX;
+});
+
+document.addEventListener('mousemove', (event) => {
+    if (isRotating) {
+        const deltaX = event.clientX - previousTouchX;
+        model.rotation.y += deltaX * 0.01;
+        previousTouchX = event.clientX;
+    }
+});
+
+document.addEventListener('mouseup', () => {
+    isRotating = false;
+});
 
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
