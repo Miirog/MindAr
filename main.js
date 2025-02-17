@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const video = document.getElementById("video");
   const nextButton = document.getElementById("nextObject");
   const previousButton = document.getElementById("previousObject");
+  const bottomBox = document.getElementById("bottomBox");
 
   let currentModel;
   const modelPaths = [
