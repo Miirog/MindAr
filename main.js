@@ -54,6 +54,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         model = gltf.scene;
         scene.add(model);
         camera.position.z = 5;
+        currentModel = model;
 
         // Add a directional light that targets the model:
         const directionalLight = new THREE.DirectionalLight(0xffffff, 10); // Increased intensity
