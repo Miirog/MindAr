@@ -60,6 +60,53 @@ document.addEventListener("DOMContentLoaded", (event) => {
   document.body.appendChild(renderer.domElement);
   renderer.setClearColor(0x09341f, 0.4);
 
+  let initialPinchDistance = null;
+  let initialCameraZ = camera.position.z;
+
+  document.addEventListener("touchstart", (event) => {
+    if (event.touches.length === 2 && model) {
+      const touch1 = event.touches[0];
+      const touch2 = event.touches[1];
+      initialPinchDistance = getDistance(touch1, touch2);
+      initialCameraZ = camera.position.z; // Capture current zoom level
+    }
+  });
+
+  document.addEventListener("touchmove", (event) => {
+    if (event.touches.length === 2 && initialPinchDistance && model) {
+      const touch1 = event.touches[0];
+      const touch2 = event.touches[1];
+      const currentPinchDistance = getDistance(touch1, touch2);
+      const deltaDistance = currentPinchDistance - initialPinchDistance;
+
+      // Calculate zoom factor (adjust sensitivity)
+      const zoomFactor = deltaDistance * 0.01; // Adjust 0.01 for sensitivity
+
+      // Limit zoom (optional)
+      const minZoom = 1; // Example minimum zoom
+      const maxZoom = 10; // Example maximum zoom
+
+      let newCameraZ = initialCameraZ + zoomFactor;
+      newCameraZ = Math.max(minZoom, Math.min(maxZoom, newCameraZ)); // Clamp
+
+      camera.position.z = newCameraZ;
+
+      // Scale the model (alternative to zooming the camera)
+      // const scaleFactor = currentPinchDistance / initialPinchDistance;
+      // model.scale.set(scaleFactor, scaleFactor, scaleFactor);
+    }
+  });
+
+  document.addEventListener("touchend", () => {
+    initialPinchDistance = null;
+  });
+
+  function getDistance(touch1, touch2) {
+    const dx = touch1.clientX - touch2.clientX;
+    const dy = touch1.clientY - touch2.clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
   const loader = new THREE.GLTFLoader();
 
   let model;
