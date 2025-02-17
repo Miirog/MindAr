@@ -16,7 +16,7 @@
 
         const loader = new THREE.GLTFLoader();
 
-        loader.load('modles/bocolla/bocolla.gltf', (gltf) => {
+        loader.load('models/bocolla/bocolla.gltf', (gltf) => {
             const model = gltf.scene;
             scene.add(model);
             camera.position.z = 5;  // Position camera
