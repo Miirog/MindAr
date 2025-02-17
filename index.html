@@ -1,20 +1,47 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Camera Access</title>
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "https://cdn.jsdelivr.net/npm/three@v0.173.0/build/three.module.js",
-          "three/addons/": "https://cdn.jsdelivr.net/npm/three@v0.173.0/examples/jsm/"
-        }
-      }
+<head>
+    <title>Three.js GLTF Test</title>
+    <style> body { margin: 0; } canvas { display: block; } </style>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/three@latest/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@latest/examples/js/loaders/GLTFLoader.js"></script>
+    <script>
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        const loader = new THREE.GLTFLoader();
+
+        loader.load('modles/bocolla/bocolla.gltf', (gltf) => {
+            const model = gltf.scene;
+            scene.add(model);
+            camera.position.z = 5;  // Position camera
+            camera.lookAt(0, 0, 0); // Make camera look at the origin
+
+            const ambientLight = new THREE.AmbientLight(0x404040);
+            scene.add(ambientLight);
+
+            function animate() {
+                requestAnimationFrame(animate);
+                renderer.render(scene, camera);
+            }
+            animate();
+
+        }, (xhr) => {
+            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+        }, (error) => {
+            console.error('Error loading GLTF:', error); // More specific error message
+        });
+
+        window.addEventListener('resize', () => { //Handle resize
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
     </script>
-    <script type="module" src="main.js"></script>
-    <link rel="stylesheet" href="styles.css">
-  </head>
-  <body>
-    <video id="video" autoplay playsinline></video>
-    <canvas id="canvas"></canvas>  <img id="capturedImage" alt="Captured Image"> 
-  </body>
+</body>
 </html>
