@@ -14,6 +14,39 @@ document.addEventListener("DOMContentLoaded", (event) => {
   ];
   let currentModelIndex = 0;
 
+  const bottomBoxTexts = [
+    {
+      title: "Bócolla Oblonga A",
+      description1: "Amplo catálogo;",
+      description2: "Diversidade de formatos e propriedades;",
+    },
+    {
+      title: "Clip",
+      description1: "Versatilidade;",
+      description2: "Durabilidade & Segurança;",
+    },
+    {
+      title: "Clip",
+      description1: "Versatilidade;",
+      description2: "Durabilidade & Segurança;",
+    },
+    {
+      title: "Porca Rápida - 14",
+      description1: "Praticidade;",
+      description2: "Fácil Instalação;",
+    },
+    {
+      title: "Porca Rápida - 27",
+      description1: "Praticidade;",
+      description2: "Fácil Instalação;",
+    },
+    {
+      title: "Presilha de Fogão",
+      description1: "Essencial no dia-a-dia;",
+      description2: "Presente na sua cozinha;",
+    },
+  ];
+
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(
     75,
@@ -55,21 +88,18 @@ document.addEventListener("DOMContentLoaded", (event) => {
         scene.add(model);
         camera.position.z = 5;
         currentModel = model;
+        bottomBox.querySelector("h2").textContent =
+          bottomBoxTexts[currentModelIndex].title;
+        bottomBox.querySelector("#description1").textContent =
+          bottomBoxTexts[currentModelIndex].description1;
+        bottomBox.querySelector("#description2").textContent =
+          bottomBoxTexts[currentModelIndex].description2;
 
-        // Add a directional light that targets the model:
         const directionalLight = new THREE.DirectionalLight(0xffffff, 10); // Increased intensity
         scene.add(directionalLight);
 
-        // Set the light's target to the model (after the model is loaded):
         directionalLight.target = model; // Very important: target the model
         directionalLight.position.set(5, 5, 5); // Adjust light position
-
-        // Optional: Add a helper to visualize the light's direction (for debugging)
-        const directionalLightHelper = new THREE.DirectionalLightHelper(
-          directionalLight,
-          5
-        );
-        scene.add(directionalLightHelper);
 
         const ambientLight = new THREE.AmbientLight(0x404040); // Soft white light
         scene.add(ambientLight);

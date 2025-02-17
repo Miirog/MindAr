@@ -21,8 +21,8 @@ body, html {
   right: 10px;
   transform: translateY(-50%);
   z-index: 1000;
-  width: 50px; 
-  height: 50px; 
+  width:  100px; 
+  height: 100px; 
   border-radius: 50%; 
   text-align: center; 
   line-height: 50px; 
@@ -39,8 +39,8 @@ body, html {
   left: 10px;
   transform: translateY(-50%) rotate(180deg);
   z-index: 1000;
-  width: 50px; 
-  height: 50px; 
+  width: 100px; 
+  height: 100px; 
   border-radius: 50%; 
   text-align: center; 
   line-height: 50px; 
@@ -77,8 +77,8 @@ body, html {
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
-  width: 250px;
-  height: 250px; 
+  width: 500px;
+  height: 500px; 
 }
 
 #background_color {
