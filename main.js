@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", (event) => {
-  const video = document.getElementById("video-background");
+  const video = document.getElementById("video");
   const canvas = document.getElementById("canvas");
 
   const scene = new THREE.Scene();
@@ -190,13 +190,35 @@ document.addEventListener("DOMContentLoaded", (event) => {
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
 
-  // Get video stream
-  navigator.mediaDevices
-    .getUserMedia({ video: true })
-    .then((stream) => {
+  let stream;
+
+  async function getCameraStream() {
+    try {
+      // Define constraints for the rear camera
+      const constraints = {
+        video: {
+          facingMode: { exact: "environment" }, // Use "environment" for back/rear camera
+        },
+      };
+
+      stream = await navigator.mediaDevices.getUserMedia(constraints);
       video.srcObject = stream;
-    })
-    .catch((error) => {
+    } catch (error) {
       console.error("Error accessing camera:", error);
-    });
+
+      // Fallback to the default camera if the rear camera is not available or permission is denied.
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ video: true }); // Default constraints
+        video.srcObject = stream;
+        console.warn("Rear camera not available. Using default camera.");
+      } catch (fallbackError) {
+        console.error("Error accessing default camera:", fallbackError);
+        alert(
+          "Error accessing camera. Please make sure you have a camera and grant permissions."
+        );
+      }
+    }
+  }
+
+  getCameraStream(); // Call the function to start the camera
 });
