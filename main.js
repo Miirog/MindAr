@@ -1,8 +1,5 @@
 document.addEventListener("DOMContentLoaded", (event) => {
   const video = document.getElementById("video");
-  const snapButton = document.getElementById("snap");
-  const canvas = document.getElementById("canvas");
-  const capturedImage = document.getElementById("capturedImage");
 
   // const scene = new THREE.Scene();
   // const camera = new THREE.PerspectiveCamera(
@@ -223,23 +220,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
   }
 
   getCameraStream();
-
-  snapButton.addEventListener("click", () => {
-    if (stream) {
-      // Check if the stream is available
-      const context = canvas.getContext("2d");
-      canvas.width = video.videoWidth; // Set canvas dimensions to video dimensions
-      canvas.height = video.videoHeight;
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-      // Convert the canvas content to a data URL (e.g., base64)
-      const imageDataURL = canvas.toDataURL("image/png"); // You can change the format (e.g., 'image/jpeg')
-
-      capturedImage.src = imageDataURL; // Set the image source
-      capturedImage.style.display = "block"; // Make the image visible
-    }
-  });
-
   // Optional: Stop the camera stream when the page is closed or unloaded.
   window.addEventListener("beforeunload", () => {
     if (stream) {
