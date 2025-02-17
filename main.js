@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
   // Load your GLTF model
   loader.load(
-    "models/bocolla/boclla",
+    "models/bocolla/bocolla.gltf",
     (gltf) => {
       // Replace with your model path
       const model = gltf.scene; // Get the loaded scene
