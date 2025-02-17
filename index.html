@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Three.js GLTF Test</title>
+    <title>Three.js Rotation Test</title>
     <style> body { margin: 0; } canvas { display: block; } </style>
 </head>
 <body>
@@ -13,91 +13,61 @@
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
-
-        // Set a background color (so you know *something* is rendering)
-        renderer.setClearColor(0xadd8e6); // Light blue
+        renderer.setClearColor(0xadd8e6);
 
         const loader = new THREE.GLTFLoader();
 
-        let model; // Store the loaded model
+        let model;
         let isRotating = false;
         let previousTouchX = 0;
+        let currentTouchX = 0;
 
         loader.load('models/bocolla/bocolla.gltf', (gltf) => {
-            const model = gltf.scene;
+            model = gltf.scene;
             scene.add(model);
+            camera.position.z = 5;
 
-            // Position the camera *outside* the model
-            camera.position.set(0, 2, 5); // Adjust these values
-            camera.lookAt(0, 0, 0); // Look at the center of the scene
-
-            // Add lights (even if your model doesn't strictly need them, it's good for testing)
             const ambientLight = new THREE.AmbientLight(0x404040);
             scene.add(ambientLight);
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-            directionalLight.position.set(1, 1, 1).normalize();
-            scene.add(directionalLight);
-
-            // Log the model to the console to verify it loaded
-            console.log("Loaded model:", model);
 
             function animate() {
-        requestAnimationFrame(animate);
+                requestAnimationFrame(animate);
 
-        if (isRotating) {
-            const deltaX = currentTouchX - previousTouchX;
-            model.rotation.y += deltaX * 0.01; // Adjust rotation speed
-            previousTouchX = currentTouchX;
-        }
+                if (isRotating && model) {
+                    const deltaX = currentTouchX - previousTouchX;
+                    model.rotation.y += deltaX * 0.01;
+                    previousTouchX = currentTouchX;
+                }
 
-        renderer.render(scene, camera);
-    }
+                renderer.render(scene, camera);
+            }
 
-    animate();
+            animate();
 
-        }, (xhr) => {
-            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-        }, (error) => {
+        }, (xhr) => { }, (error) => {
             console.error('Error loading GLTF:', error);
         });
 
-        let currentTouchX = 0; // Initialize currentTouchX
+        document.addEventListener('touchstart', (event) => {
+            console.log("touchstart", event);
+            if (event.touches.length === 1 && model) {
+                isRotating = true;
+                currentTouchX = event.touches[0].clientX;
+                previousTouchX = event.touches[0].clientX;
+            }
+        });
 
-document.addEventListener('touchstart', (event) => {
-    if (event.touches.length === 1 && model) { // Only rotate with one finger and if model exists
-        isRotating = true;
-        currentTouchX = event.touches[0].clientX;
-        previousTouchX = event.touches[0].clientX;
-    }
-});
+        document.addEventListener('touchmove', (event) => {
+            console.log("touchmove", event);
+            if (event.touches.length === 1 && isRotating) {
+                currentTouchX = event.touches[0].clientX;
+            }
+        });
 
-document.addEventListener('touchmove', (event) => {
-    if (event.touches.length === 1 && isRotating) {
-        currentTouchX = event.touches[0].clientX;
-    }
-});
-
-document.addEventListener('touchend', () => {
-    isRotating = false;
-});
-
-// Optional: Mouse Control (for testing on desktop)
-document.addEventListener('mousedown', (event) => {
-    isRotating = true;
-    previousTouchX = event.clientX;
-});
-
-document.addEventListener('mousemove', (event) => {
-    if (isRotating) {
-        const deltaX = event.clientX - previousTouchX;
-        model.rotation.y += deltaX * 0.01;
-        previousTouchX = event.clientX;
-    }
-});
-
-document.addEventListener('mouseup', () => {
-    isRotating = false;
-});
+        document.addEventListener('touchend', (event) => {
+            console.log("touchend", event);
+            isRotating = false;
+        });
 
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
