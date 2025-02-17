@@ -24,6 +24,14 @@
         let currentTouchX = 0;
         let currentTouchY = 0;
 
+        // Pinch Gesture Handling
+let touch0StartPosition = null;
+let touch1StartPosition = null;
+let isPinching = false;
+const scaleFactor = 0.01; // Adjust scaling speed
+const minScale = 0.1;
+const maxScale = 5;
+
         loader.load('models/bocolla/bocolla.gltf', (gltf) => {
             model = gltf.scene;
             scene.add(model);
@@ -113,6 +121,58 @@ document.addEventListener('mousemove', (event) => {
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
+
+        renderer.domElement.addEventListener('touchstart', (event) => {
+    if (event.touches.length === 2) {
+        touch0StartPosition = new THREE.Vector2(event.touches[0].clientX, event.touches[0].clientY);
+        touch1StartPosition = new THREE.Vector2(event.touches[1].clientX, event.touches[1].clientY);
+        isPinching = true;
+    }
+});
+
+renderer.domElement.addEventListener('touchmove', (event) => {
+    if (isPinching && event.touches.length === 2) {
+        const touch0CurrentPosition = new THREE.Vector2(event.touches[0].clientX, event.touches[0].clientY);
+        const touch1CurrentPosition = new THREE.Vector2(event.touches[1].clientX, event.touches[1].clientY);
+
+        const currentDistance = touch0CurrentPosition.distanceTo(touch1CurrentPosition);
+        const previousDistance = touch0StartPosition.distanceTo(touch1StartPosition);
+
+        const distanceDelta = currentDistance - previousDistance;
+        const scaleChange = distanceDelta * scaleFactor;
+
+        let newScale = cube.scale.x + scaleChange; // Scale applied uniformly
+
+        newScale = Math.max(minScale, Math.min(maxScale, newScale)); // Clamp scale
+
+        cube.scale.set(newScale, newScale, newScale);
+
+
+        touch0StartPosition = touch0CurrentPosition;
+        touch1StartPosition = touch1CurrentPosition;
+    }
+});
+
+renderer.domElement.addEventListener('touchend', () => {
+    isPinching = false;
+});
+
+
+// Animation loop
+function animate() {
+    requestAnimationFrame(animate);
+    controls.update(); // Update OrbitControls
+    renderer.render(scene, camera);
+}
+
+animate();
+
+// Handle window resizing
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
     </script>
 </body>
 </html>
