@@ -15,6 +15,10 @@
         document.body.appendChild(renderer.domElement);
         renderer.setClearColor(0xadd8e6);
 
+        // OrbitControls (optional, for scene navigation)
+const controls = new OrbitControls(camera, renderer.domElement);
+
+
         const loader = new THREE.GLTFLoader();
 
         let model;
