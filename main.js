@@ -63,14 +63,18 @@ document.addEventListener("DOMContentLoaded", (event) => {
   let initialPinchDistance = null;
   let initialCameraZ = camera.position.z;
 
-  document.addEventListener("touchstart", (event) => {
-    if (event.touches.length === 2 && model) {
-      const touch1 = event.touches[0];
-      const touch2 = event.touches[1];
-      initialPinchDistance = getDistance(touch1, touch2);
-      initialCameraZ = camera.position.z; // Capture current zoom level
-    }
-  });
+  document.addEventListener(
+    "touchstart",
+    (event) => {
+      if (event.touches.length === 2 && model) {
+        const touch1 = event.touches[0];
+        const touch2 = event.touches[1];
+        initialPinchDistance = getDistance(touch1, touch2);
+        initialCameraZ = camera.position.z; // Capture current zoom level
+      }
+    },
+    { passive: false }
+  );
 
   document.addEventListener("touchmove", (event) => {
     if (event.touches.length === 2 && initialPinchDistance && model) {
