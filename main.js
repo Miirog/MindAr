@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
-  renderer.setClearColor(0xadd8e6, 0);
+  renderer.setClearColor(0x09341f, 0.4);
 
   const loader = new THREE.GLTFLoader();
 
