@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const previousButton = document.getElementById("previousObject");
 
   let currentModel;
-  const modelSources = [
+  const modelPaths = [
     "models/bocolla/bocolla.gltf",
     "models/clip01/clip_seta01.gltf",
     "models/clip02/clip_seta02.gltf",
