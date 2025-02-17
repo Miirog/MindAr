@@ -24,6 +24,16 @@ document.addEventListener("DOMContentLoaded", (event) => {
   // Instantiate a GLTFLoader
   const loader = new GLTFLoader();
 
+  const ambientLight = new THREE.AmbientLight(0x404040); // Soft white light
+  scene.add(ambientLight);
+
+  // For more realistic lighting, add a DirectionalLight or PointLight:
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+  directionalLight.position.set(1, 1, 1).normalize();
+  scene.add(directionalLight);
+
+  renderer.setClearColor(0xadd8e6); // Light blue background
+
   // Load your GLTF model
   loader.load(
     "models/bocolla/bocolla.gltf",
@@ -32,7 +42,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
       const model = gltf.scene; // Get the loaded scene
 
       // Optional: Scale, position, or rotate the model
-      model.scale.set(1, 1, 1); // Example scaling
+      model.scale.set(10, 10, 10); // Example scaling
       model.position.set(0, 0, 0); // Center the model
 
       scene.add(model); // Add the model to the scene
