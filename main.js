@@ -4,84 +4,56 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 document.addEventListener("DOMContentLoaded", (event) => {
   const video = document.getElementById("video");
   const canvas = document.getElementById("canvas");
+
   const scene = new THREE.Scene();
+
+  // Camera
   const camera = new THREE.PerspectiveCamera(
     75,
-    canvas.width / canvas.height,
+    window.innerWidth / window.innerHeight,
     0.1,
     1000
   );
-  const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
-  renderer.setSize(canvas.width, canvas.height);
-  renderer.setPixelRatio(window.devicePixelRatio);
+  camera.position.z = 5; // Adjust z position to see the cube
+
+  // Renderer
+  const renderer = new THREE.WebGLRenderer();
+  renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
-  // Improved Lighting
-  const ambientLight = new THREE.AmbientLight(0x404040);
+  // Cube Geometry and Material
+  const geometry = new THREE.BoxGeometry(); // Default cube size (1, 1, 1)
+  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 }); // Green color
+  const cube = new THREE.Mesh(geometry, material);
+  scene.add(cube);
+
+  // Optional: Add some lights so you can see the cube's faces properly
+  const ambientLight = new THREE.AmbientLight(0x404040); // Soft white light
   scene.add(ambientLight);
 
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-  directionalLight.position.set(1, 1, 1).normalize();
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5); // White directional light
+  directionalLight.position.set(1, 1, 1).normalize(); // From top right
   scene.add(directionalLight);
 
-  // Add a point light to help with visibility.  This is especially useful
-  // if your model doesn't have materials or has dark materials.
-  const pointLight = new THREE.PointLight(0xffffff, 1);
-  pointLight.position.set(0, 10, 0); // Position above the scene
-  scene.add(pointLight);
+  // Animation loop (for continuous rendering)
+  function animate() {
+    requestAnimationFrame(animate);
+    // Optional: Rotate the cube if you want to see it from different angles
+    // cube.rotation.x += 0.01;
+    // cube.rotation.y += 0.01;
 
-  // Load GLTF model
-  const loader = new GLTFLoader(); // Make sure THREE.GLTFLoader is included
+    renderer.render(scene, camera);
+  }
 
-  loader.load(
-    "models/bocolla/bocolla.gltf",
-    function (gltf) {
-      const model = gltf.scene;
-      scene.add(model);
+  animate();
 
-      // 1. Position the camera (Crucial!)
-      camera.position.z = 5; // Adjust this value as needed
-      camera.lookAt(model.position); // Look at the model's center
+  // Handle window resizing
+  window.addEventListener("resize", () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
 
-      // 2. Handle Model Scaling (if necessary)
-      const box = new THREE.Box3().setFromObject(model);
-      const size = box.getSize(new THREE.Vector3(10, 10, 10));
-      const modelScale = Math.max(size.x, size.y, size.z); // Get largest dimension
-      if (modelScale > 1) {
-        // If model is too big
-        model.scale.set(1 / modelScale, 1 / modelScale, 1 / modelScale); // Scale it down
-      }
-
-      // 3. Optional: Animations (if the model has them)
-      if (gltf.animations.length > 0) {
-        const mixer = new THREE.AnimationMixer(model);
-        const animation = mixer.clipAction(gltf.animations[0]); // Play the first animation
-        animation.play();
-
-        // Store the mixer for use in the animation loop
-        model.mixer = mixer; // Add mixer to the model for easy access
-      }
-
-      // Render loop (Important!)
-      function animate() {
-        requestAnimationFrame(animate);
-
-        if (model.mixer) {
-          model.mixer.update(0.016); // Update animation mixer (deltaTime ~ 1/60 sec)
-        }
-
-        renderer.render(scene, camera);
-      }
-
-      animate(); // Start the animation loop
-    },
-    function (xhr) {
-      console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
-    },
-    function (error) {
-      console.error("An error happened loading the model:", error);
-    }
-  );
   // loader.load(`models/bocolla/bocolla.gltf`, (gltf) => {
   //   // Replace with your model path
   //   const model = gltf.scene;
