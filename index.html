@@ -8,7 +8,10 @@
     <script src="https://cdn.jsdelivr.net/npm/three@latest/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@latest/examples/js/loaders/GLTFLoader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@latest/examples/js/controls/OrbitControls.js"></script>
-    <script>
+    <script type="module">
+       import * as THREE from 'https://cdn.jsdelivr.net/npm/three@latest/build/three.module.js';
+       import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@latest/examples/jsm/controls/OrbitControls.js';
+
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer();
@@ -16,8 +19,6 @@
         document.body.appendChild(renderer.domElement);
         renderer.setClearColor(0xadd8e6);
 
-
-        const { OrbitControls } = THREE.examples.jsm.controls;
         // OrbitControls (optional, for scene navigation)
 const controls = new OrbitControls(camera, renderer.domElement);
 
