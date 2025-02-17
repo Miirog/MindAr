@@ -196,25 +196,29 @@ document.addEventListener("DOMContentLoaded", (event) => {
     try {
       const constraints = {
         video: {
-          facingMode: { exact: "environment" },
+          facingMode: { exact: "environment" }, // Try rear camera first
         },
       };
 
       stream = await navigator.mediaDevices.getUserMedia(constraints);
       video.srcObject = stream;
+      console.log("Using rear camera."); // Indicate which camera is used
+      return; // Exit the function if successful
     } catch (error) {
-      console.error("Error accessing camera:", error);
+      console.error("Error accessing rear camera:", error);
+      // Fallback: Try any available camera
+    }
 
-      try {
-        stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        video.srcObject = stream;
-        console.warn("Rear camera not available. Using default camera.");
-      } catch (fallbackError) {
-        console.error("Error accessing default camera:", fallbackError);
-        alert(
-          "Error accessing camera. Please make sure you have a camera and grant permissions."
-        );
-      }
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ video: true }); // No facingMode constraint
+      video.srcObject = stream;
+      console.warn("Rear camera not available. Using default camera.");
+    } catch (fallbackError) {
+      console.error("Error accessing default camera:", fallbackError);
+      alert(
+        "Error accessing camera. Please make sure you have a camera and grant permissions."
+      );
+      return; // Important: Stop execution if no camera is available
     }
   }
 
