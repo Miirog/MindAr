@@ -56,7 +56,18 @@ document.addEventListener("DOMContentLoaded", (event) => {
     1000
   );
   const renderer = new THREE.WebGLRenderer();
+
+  // Get the device pixel ratio (important for high-DPI screens)
+  const pixelRatio = window.devicePixelRatio;
+
+  // Set the size using the pixel ratio
   renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(pixelRatio); // Very important!
+
+  // Update camera aspect ratio
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+
   document.body.appendChild(renderer.domElement);
   renderer.setClearColor(0x09341f, 0.4);
 
@@ -235,9 +246,17 @@ document.addEventListener("DOMContentLoaded", (event) => {
   });
 
   window.addEventListener("resize", () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
+    // Get new dimensions
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    // Set size and pixel ratio
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(pixelRatio);
+
+    // Update camera aspect
+    camera.aspect = width / height;
     camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
   });
 
   renderer.domElement.addEventListener("touchstart", (event) => {
