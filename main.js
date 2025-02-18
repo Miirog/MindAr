@@ -56,6 +56,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
     1000
   );
   const renderer = new THREE.WebGLRenderer();
+  const controls = new OrbitControls(camera, renderer.domElement);
+
+  controls.minDistance = 5; // Minimum distance to the target
+  controls.maxDistance = 20; // Maximum distance to the target
 
   // Get the device pixel ratio (important for high-DPI screens)
   const pixelRatio = window.devicePixelRatio;
@@ -71,56 +75,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
   document.body.appendChild(renderer.domElement);
   renderer.setClearColor(0x09341f, 0.4);
 
-  let initialPinchDistance = null;
-  let initialCameraZ = camera.position.z;
-
-  document.addEventListener(
+  renderer.domElement.addEventListener(
     "touchstart",
-    (event) => {
-      if (event.touches.length === 2 && model) {
-        const touch1 = event.touches[0];
-        const touch2 = event.touches[1];
-        initialPinchDistance = getDistance(touch1, touch2);
-        initialCameraZ = camera.position.z; // Capture current zoom level
-      }
+    function (event) {
+      event.preventDefault(); // Prevent page zoom on touch
     },
-    { passive: false }
+    false
   );
-
-  document.addEventListener("touchmove", (event) => {
-    if (event.touches.length === 2 && initialPinchDistance && model) {
-      const touch1 = event.touches[0];
-      const touch2 = event.touches[1];
-      const currentPinchDistance = getDistance(touch1, touch2);
-      const deltaDistance = currentPinchDistance - initialPinchDistance;
-
-      // Calculate zoom factor (adjust sensitivity)
-      const zoomFactor = deltaDistance * 0.01; // Adjust 0.01 for sensitivity
-
-      // Limit zoom (optional)
-      const minZoom = 1; // Example minimum zoom
-      const maxZoom = 10; // Example maximum zoom
-
-      let newCameraZ = initialCameraZ + zoomFactor;
-      newCameraZ = Math.max(minZoom, Math.min(maxZoom, newCameraZ)); // Clamp
-
-      camera.position.z = newCameraZ;
-
-      // Scale the model (alternative to zooming the camera)
-      // const scaleFactor = currentPinchDistance / initialPinchDistance;
-      // model.scale.set(scaleFactor, scaleFactor, scaleFactor);
-    }
-  });
-
-  document.addEventListener("touchend", () => {
-    initialPinchDistance = null;
-  });
-
-  function getDistance(touch1, touch2) {
-    const dx = touch1.clientX - touch2.clientX;
-    const dy = touch1.clientY - touch2.clientY;
-    return Math.sqrt(dx * dx + dy * dy);
-  }
 
   const loader = new THREE.GLTFLoader();
 
@@ -130,14 +91,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
   let previousTouchY = 0;
   let currentTouchX = 0;
   let currentTouchY = 0;
-
-  // Pinch Gesture Handling
-  let touch0StartPosition = null;
-  let touch1StartPosition = null;
-  let isPinching = false;
-  const scaleFactor = 0.01; // Adjust scaling speed
-  const minScale = 0.1;
-  const maxScale = 5;
 
   function loadModel(modelPath) {
     if (currentModel) {
@@ -180,6 +133,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
             previousTouchX = currentTouchX;
             previousTouchY = currentTouchY;
           }
+          controls.update();
 
           renderer.render(scene, camera);
         }
