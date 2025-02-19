@@ -5,27 +5,71 @@
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
     <script src="main.js"></script>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Link to the CSS file -->
   </head>
   <body>
-    <img id="logo" src="public/img/stamper_logo_v1.png"/>
+    <img id="logo" src="public/img/stamper_logo_v1.png" />
     <button id="nextObject"></button>
     <button id="previousObject"></button>
-    <a-scene  id="trackRotation" mindar-image="imageTargetSrc: ./targets/targets.mind; uiScanning:no; uiLoading:no; filterMinCF: 0.0001; filterBeta: 1" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+    <a-scene
+      id="trackRotation"
+      mindar-image="imageTargetSrc: ./targets/targets.mind; uiScanning:no; uiLoading:no; filterMinCF: 0.0001; filterBeta: 1"
+      color-space="sRGB"
+      renderer="colorManagement: true, physicallyCorrectLights"
+      vr-mode-ui="enabled: false"
+      device-orientation-permission-ui="enabled: false"
+    >
       <a-assets>
-        <img id="card" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/image-tracking/assets/card-example/card.png" />
-        <a-asset-item id="avatarModel" src="models/bocolla/bocolla.gltf"></a-asset-item>
+        <img
+          id="card"
+          src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/image-tracking/assets/card-example/card.png"
+        />
+        <a-asset-item
+          id="avatarModel"
+          src="models/bocolla/bocolla.gltf"
+        ></a-asset-item>
       </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled:  false"></a-camera>
       <div id="background_color"></div>
-      <a-light type="directional" color="#ffffff" intensity="10" position="1 1 0"></a-light>
-      <a-light type="directional" color="#ffffff" intensity="5" position="0 0 -90"></a-light>
-      <a-light type="directional" color="#ffffff" intensity="5" position="0 0 90"></a-light>
-      
+      <a-light
+        type="directional"
+        color="#ffffff"
+        intensity="10"
+        position="1 1 0"
+        castShadow="true"
+      ></a-light>
+      <a-light
+        type="directional"
+        color="#ffffff"
+        intensity="5"
+        position="0 0 -90"
+      ></a-light>
+      <a-light
+        type="directional"
+        color="#ffffff"
+        intensity="5"
+        position="0 0 90"
+      ></a-light>
 
       <a-entity mindar-image-target="targetIndex: 0" id="a-entity">
-        <a-gltf-model id="model" rotation="0 0 0" position="0 0 0" scale="0.3 0.3 0.3" src="#avatarModel"/>
+        <a-gltf-model
+          id="model"
+          rotation="0 0 0"
+          position="0 0 0"
+          scale="0.3 0.3 0.3"
+          src="#avatarModel"
+          shadow="cast: true"
+        />
+        <a-plane
+          position="0 0 0"
+          rotation="-90 0 0"
+          width="10"
+          height="10"
+          color="#7BC8A4"
+          shadow="receive: true"
+        ></a-plane>
       </a-entity>
       <div id="bottomBox">
         <h2></h2>
